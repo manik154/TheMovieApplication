@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:id="@+id/linearlayout1"
+        android:minHeight="45dp"
+        android:orientation="vertical">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Select Your Genre"
+            android:textSize="18sp"
+            android:fontFamily="@font/lato_black_italic"
+            android:textAlignment="center"
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/linearlayout1"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginLeft="10dp"
+            android:gravity="center_vertical"
+            android:textSize="16sp"
+            android:minHeight="45dp"
+            android:id="@+id/textview1"
+            android:fontFamily="@font/lato_black_italic"
+            android:text="@string/movies" />
+
+        <include layout="@layout/seperator_layout">
+
+        </include>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginLeft="10dp"
+            android:minHeight="45dp"
+            android:id="@+id/textview2"
+            android:textSize="16sp"
+            android:fontFamily="@font/lato_black_italic"
+            android:gravity="center_vertical"
+            android:text="@string/tv_shows" />
+
+        <include layout="@layout/seperator_layout"></include>
+
+    </LinearLayout>
+
+</RelativeLayout>

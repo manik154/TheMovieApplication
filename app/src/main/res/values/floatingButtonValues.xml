@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<resources>
+    <item name="fab_top_rated" type="id" />
+    <item name="fab_upcoming_movie" type="id" />
+    <item name="fab_on_air_tv_shows" type="id" />
+
+    <item name="fab_most_popular" type="id" />
+
+</resources>

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:elevation="5dp">
+
+
+    <ImageView
+        android:id="@+id/img_thumb"
+        android:layout_width="150dp"
+        android:layout_height="200dp"
+        android:padding="1dp"
+        android:src="@color/darkGray"
+        android:scaleType="centerCrop"
+        tools:ignore="ContentDescription" />
+    <TextView
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        android:fontFamily="@font/lato_italic"
+        android:id="@+id/seasonNumber"
+        android:layout_marginTop="10dp"
+        android:text="sfsdfsd"
+        />
+    <TextView
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        android:text="sgsdf"
+        android:layout_marginTop="5dp"
+        android:fontFamily="@font/lato_italic"
+        android:id="@+id/totalEpisode"
+        />
+
+</LinearLayout>
