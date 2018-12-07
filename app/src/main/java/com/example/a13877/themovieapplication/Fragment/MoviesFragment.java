@@ -366,6 +366,7 @@ public class MoviesFragment extends Fragment implements MovieListAdapter.OnMovie
         movieData=movieListAdapter.getItem(position);
 
         Intent intent = new Intent(getActivity(), MovieDetailActivity.class);
+
         intent.putExtra("key",movieData.getId());
         startActivity(intent);
     }

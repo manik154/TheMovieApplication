@@ -7,11 +7,15 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
 
 import com.example.a13877.themovieapplication.Adapter.GetSeasonListAdapter;
 import com.example.a13877.themovieapplication.Adapter.ReviewListAdapter;
@@ -41,7 +45,7 @@ public class TvDetailActivity extends AppCompatActivity {
     private RecyclerView recyclerViewSeasonList;
     private ReviewListAdapter reviewListAdapter;
     private GetSeasonListAdapter getSeasonListAdapter;
-
+    private ImageView posterpath;
     private TextView overview;
     private TextView runtime;
     private TextView voteAverage;
@@ -50,15 +54,22 @@ public class TvDetailActivity extends AppCompatActivity {
     private int id;
     private TvShow tvShow;
     private TextView viewSeason;
+    private Toolbar toolbar;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_detail_televieion_shows);
+
+        toolbar = findViewById(R.id.toolbar);
+
+        toolbar.setTitle("");
+        setSupportActionBar(toolbar);
+
         apiService = new ApiService();
         recyclerView = findViewById(R.id.recyclerViewReviewList);
         recyclerViewSeasonList = findViewById(R.id.recyclerSeasonList);
-        getSeasonListAdapter=new GetSeasonListAdapter(getApplicationContext());
+        getSeasonListAdapter = new GetSeasonListAdapter(getApplicationContext());
         image = findViewById(R.id.image);
         name = findViewById(R.id.titleShow);
         runtime = findViewById(R.id.showruntime);
@@ -68,6 +79,7 @@ public class TvDetailActivity extends AppCompatActivity {
         homepage = findViewById(R.id.homepage);
         genre = findViewById(R.id.genre);
         floatingActionButton = findViewById(R.id.fab);
+        posterpath = findViewById(R.id.posterPath);
 
         id = getIntent().getExtras().getInt("key");
         if (id != 0) {
@@ -92,9 +104,8 @@ public class TvDetailActivity extends AppCompatActivity {
             public void onResponse(Call call, Response response) {
                 TvSeason tvSeason = (TvSeason) response.body();
 
-                if (tvSeason != null)
-                {
-                    recyclerViewSeasonList.setLayoutManager(new LinearLayoutManager(getApplicationContext(),LinearLayoutManager.HORIZONTAL,false));
+                if (tvSeason != null) {
+                    recyclerViewSeasonList.setLayoutManager(new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.HORIZONTAL, false));
                     recyclerViewSeasonList.setHasFixedSize(true);
                     getSeasonListAdapter.addAll(tvSeason.getSeasons());
                     recyclerViewSeasonList.setAdapter(getSeasonListAdapter);
@@ -128,7 +139,10 @@ public class TvDetailActivity extends AppCompatActivity {
                     Picasso.with(getApplicationContext())
                             .load(ApiService.IMG_URL + tvShow.getPoster_path())
                             .into(image);
-
+                  /*  Picasso.with(getApplicationContext())
+                            .load(ApiService.IMG_URL + tvShow.getPoster_path())
+                            .into(posterpath);
+*/
                     StringBuilder s = new StringBuilder();
                     for (int i = 0; i < tvShow.getGenres().size(); i++) {
                         s.append(tvShow.getGenres().get(i).getGenreType()).append(" ").append(",").append(" ");
@@ -204,4 +218,19 @@ public class TvDetailActivity extends AppCompatActivity {
         });
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+
+        super.onCreateOptionsMenu(menu);
+        getMenuInflater().inflate(R.menu.menu_share, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.share) {
+            Toast.makeText(this, "You Clicked Share Option", Toast.LENGTH_SHORT).show();
+        }
+        return super.onOptionsItemSelected(item);
+    }
 }

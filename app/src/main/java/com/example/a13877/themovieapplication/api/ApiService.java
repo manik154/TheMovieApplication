@@ -17,9 +17,6 @@ import retrofit2.Callback;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-/**
- * Created by Wim on 6/2/17.
- */
 
 public class ApiService {
 
@@ -114,15 +111,13 @@ public class ApiService {
         apiInterface.getTvShowReview(tvId).enqueue(callback);
     }
 
-    /*public void getMovieGenreList(Callback callback) {
-        apiInterface.onGenresMovieList().enqueue(callback);
+    public void getVideoTrailers(int movieId,Callback callback) {
+        apiInterface.getVideoTrailers(movieId).enqueue(callback);
     }
-
-
-
-    public void getTrailers(int movieId, Callback callback) {
-        apiInterface.trailers(movieId).enqueue(callback);
+    public void getMovieGenreList(Callback callback) {
+        apiInterface.getGenreList().enqueue(callback);
     }
-}
-*/
+    public void getTvGenreList(Callback callback) {
+        apiInterface.getTvGenreList().enqueue(callback);
+    }
 }

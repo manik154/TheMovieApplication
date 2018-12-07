@@ -4,20 +4,20 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.example.a13877.themovieapplication.Activity.MovieGenreList;
 import com.example.a13877.themovieapplication.R;
 
+import org.w3c.dom.Text;
 
 public class GenresFragment extends Fragment {
 
-    private TextView textViewMovie;
-    private TextView textviewShow;
-
+    private TextView textViewmoviesList;
+    private TextView textViewTvShowList;
 
     @Nullable
     @Override
@@ -25,8 +25,8 @@ public class GenresFragment extends Fragment {
         //returning our layout file
         //change R.layout.yourlayoutfilename for each of your fragments
         View view = inflater.inflate(R.layout.fragment_menu_3, container, false);
-        textViewMovie = view.findViewById(R.id.textview1);
-        textviewShow = view.findViewById(R.id.textview2);
+textViewmoviesList=view.findViewById(R.id.textview1);
+        textViewTvShowList=view.findViewById(R.id.textview2);
         return view;
     }
 
@@ -37,13 +37,23 @@ public class GenresFragment extends Fragment {
         //you can set the title for your toolbar here for different fragments different titles
         getActivity().setTitle("Genres");
 
-        textViewMovie.setOnClickListener(new View.OnClickListener() {
+        textViewmoviesList.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view)
-            {
-
+            public void onClick(View view) {
+                Intent intent=new Intent(getActivity(),MovieGenreList.class);
+                intent.putExtra("isMovie",true);
+                startActivity(intent);
             }
         });
-
+        textViewTvShowList.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent=new Intent(getActivity(),MovieGenreList.class);
+                intent.putExtra("isMovie",false);
+                startActivity(intent);
+            }
+        });
     }
+
+
 }

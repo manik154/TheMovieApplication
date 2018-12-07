@@ -69,7 +69,6 @@ public class ReviewListAdapter extends RecyclerView.Adapter<ReviewListAdapter.Re
 
     @Override
     public int getItemCount() {
-        Log.v("result", "" + reviewResultTypes.size());
         return reviewResultTypes.size();
     }
 

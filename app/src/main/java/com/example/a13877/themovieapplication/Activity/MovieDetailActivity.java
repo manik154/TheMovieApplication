@@ -8,22 +8,23 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.example.a13877.themovieapplication.Adapter.GetSimilarMoviesAdapter;
+import com.example.a13877.themovieapplication.Adapter.GetTrialersListAdapter;
 import com.example.a13877.themovieapplication.Adapter.ReviewListAdapter;
-import com.example.a13877.themovieapplication.Model.GetSimilar;
 import com.example.a13877.themovieapplication.Model.MovieDetails;
 import com.example.a13877.themovieapplication.Model.Review;
+import com.example.a13877.themovieapplication.Model.VideoTrailers;
 import com.example.a13877.themovieapplication.R;
 import com.example.a13877.themovieapplication.api.ApiService;
 import com.example.a13877.themovieapplication.util.Constant;
 import com.squareup.picasso.Picasso;
+
 import java.net.SocketTimeoutException;
 
 import retrofit2.Call;
@@ -45,7 +46,9 @@ public class MovieDetailActivity extends AppCompatActivity {
     private TextView homepage;
     private RecyclerView recyclerViewReview;
     private ReviewListAdapter reviewListAdapter;
+    private GetTrialersListAdapter getTrialersListAdapter;
 
+    private RecyclerView recyclerViewTrailerList;
     private FloatingActionButton floatingActionButton;
     private int id;
 
@@ -55,6 +58,7 @@ public class MovieDetailActivity extends AppCompatActivity {
         setContentView(R.layout.movie_detail_activity);
 
         toolbar = findViewById(R.id.toolbar);
+
         toolbar.setTitle("");
         setSupportActionBar(toolbar);
 
@@ -67,8 +71,9 @@ public class MovieDetailActivity extends AppCompatActivity {
         taglline = findViewById(R.id.tagline);
         homepage = (TextView) findViewById(R.id.homepage);
 
-        floatingActionButton=findViewById(R.id.fab);
+        floatingActionButton = findViewById(R.id.fab);
         recyclerViewReview = findViewById(R.id.recyclerViewReviewList);
+        recyclerViewTrailerList = findViewById(R.id.recyclerViewTrailerList);
 
         apiService = new ApiService();
         id = getIntent().getExtras().getInt("key");
@@ -76,8 +81,8 @@ public class MovieDetailActivity extends AppCompatActivity {
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent=new Intent(MovieDetailActivity.this,SimilarMovieslist.class);
-              intent.putExtra("IdSimilar",id);
+                Intent intent = new Intent(MovieDetailActivity.this, SimilarMovieslist.class);
+                intent.putExtra("IdSimilar", id);
                 startActivity(intent);
             }
         });
@@ -94,8 +99,7 @@ public class MovieDetailActivity extends AppCompatActivity {
         apiService.getMovieReviews(id, new Callback() {
 
             @Override
-            public void onResponse(Call call, Response response)
-            {
+            public void onResponse(Call call, Response response) {
 
                 Review review = (Review) response.body();
 
@@ -124,14 +128,40 @@ public class MovieDetailActivity extends AppCompatActivity {
         });
     }
 
-    private void loadMovieTrialers(int id)
-    {
+    private void loadMovieTrialers(int id) {
+        apiService.getVideoTrailers(id, new Callback() {
 
+            @Override
+            public void onResponse(Call call, Response response) {
+                VideoTrailers videoTrailers = (VideoTrailers) response.body();
+                if (videoTrailers != null) {
+                    Log.v("hope",""+videoTrailers.getResults());
+                    getTrialersListAdapter=new GetTrialersListAdapter(getApplicationContext());
+                    recyclerViewTrailerList.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+                    recyclerViewTrailerList.setHasFixedSize(true);
+                    getTrialersListAdapter.addAll(videoTrailers.getResults());
+
+                    recyclerViewTrailerList.setAdapter(getTrialersListAdapter);
+
+                } else {
+                    Toast.makeText(MovieDetailActivity.this, "No Data!", Toast.LENGTH_LONG).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call call, Throwable t) {
+                if (t instanceof SocketTimeoutException) {
+                    Toast.makeText(MovieDetailActivity.this, "Request Timeout. Please try again!", Toast.LENGTH_LONG).show();
+                } else {
+                    Toast.makeText(MovieDetailActivity.this, "Connection Error!", Toast.LENGTH_LONG).show();
+                }
+
+            }
+        });
     }
 
-    private void loadMovieDetails(int id)
-    {
-            loadMovieTrialers(id);
+    private void loadMovieDetails(int id) {
+        loadMovieTrialers(id);
 
         apiService.getMovieDetail(id, new Callback() {
 
@@ -143,33 +173,21 @@ public class MovieDetailActivity extends AppCompatActivity {
                     Toast.makeText(MovieDetailActivity.this, "" + movieDetail.getId(), Toast.LENGTH_SHORT).show();
 
                     textviewTitle.setText(movieDetail.getOriginalTitle());
-                    textViewReleaseDates.setText("Release Date:- "+movieDetail.getReleaseDate());
+                    textViewReleaseDates.setText("Release Date:- " + movieDetail.getReleaseDate());
                     textViewOverView.setText(movieDetail.getOverview());
 
-                    runtime.setText("RunTime:- "+String.valueOf(movieDetail.getRuntime()) + " minutes");
-                    voteAverage.setText("Average Rating:- "+String.valueOf(movieDetail.getVoteAverage()));
+                    runtime.setText("RunTime:- " + String.valueOf(movieDetail.getRuntime()) + " minutes");
+                    voteAverage.setText("Average Rating:- " + String.valueOf(movieDetail.getVoteAverage()));
                     taglline.setText(String.valueOf(movieDetail.getTagline()));
 
                     Picasso.with(MovieDetailActivity.this).load(Constant.IMG_URL + movieDetail.getPosterPath())
                             .placeholder(R.drawable.kitten).into(imagePoster);
-                if(movieDetail.getHomepage()==null)
-                {
-                    homepage.setText("Not Available");
-                }
-                else {
-                    homepage.setText(movieDetail.getHomepage());
-                }
-                  /*
-  for (int i = 0; i < movieDetail.getGenres().size(); i++) {
-                        Genre genre = movieDetail.getGenres().get(i);
-
-                        if(i < movieDetail.getGenres().size() - 1) {
-                            tvMovieGenre.append(genre.getName() + ",");
-                        }else{
-                            tvMovieGenre.append(genre.getName());
-                        }
+                    if (movieDetail.getHomepage() == null) {
+                        homepage.setText("Not Available");
+                    } else {
+                        homepage.setText(movieDetail.getHomepage());
                     }
-           */
+
                 } else {
                     Toast.makeText(MovieDetailActivity.this, "No Data!", Toast.LENGTH_LONG).show();
                 }

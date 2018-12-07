@@ -41,6 +41,8 @@
         <activity android:name=".Activity.SimilarMovieslist"> </activity>
         <activity android:name=".Activity.TvDetailActivity"> </activity>
 
+        <activity android:name=".Activity.MovieGenreList"> </activity>
+
     </application>
 
 </manifest>

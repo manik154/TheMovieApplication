@@ -6,6 +6,8 @@ import com.example.a13877.themovieapplication.Model.MovieDetails;
 import com.example.a13877.themovieapplication.Model.Review;
 import com.example.a13877.themovieapplication.Model.TvSeason;
 import com.example.a13877.themovieapplication.Model.TvShow;
+import com.example.a13877.themovieapplication.Model.TvShowGenre;
+import com.example.a13877.themovieapplication.Model.VideoTrailers;
 import com.example.a13877.themovieapplication.util.Constant;
 import retrofit2.Call;
 import retrofit2.http.GET;
@@ -63,14 +65,13 @@ public interface ApiInterface {
 
     //https://api.themoviedb.org/3/movie/{movie_id}/videos?api_key=<<api_key>>&language=en-US
 
-    @GET(Constant.TV_PATH+ "/{tv_id}"+Constant.REVIEWS)
-    Call<VideoTrailers>getTvShowReview(@Path("tv_id")int tvId);
-    /*
-    @GET(Constant.MOVIE_PATH + "/{movie_id}/" + Constant.VIDEOS)
-    Call<Trailer> trailers(
-            @Path("movie_id") int movieId);
+    @GET(Constant.MOVIE_PATH+ "/{movie_id}"+Constant.VIDEOS)
+    Call<VideoTrailers>getVideoTrailers(@Path("movie_id")int movieId);
 
-   */
+    //https://api.themoviedb.org/3/genre/movie/list?api_key=95ffbd804001d42bb7eb88c69bf5a9cd&language=en-US
+    @GET(Constant.GENRE_PATH+"/list")
+    Call<TvShow>getGenreList();
 
-
+    @GET(Constant.GENRE_PATH2+"/list")
+    Call<TvShow>getTvGenreList();
 }

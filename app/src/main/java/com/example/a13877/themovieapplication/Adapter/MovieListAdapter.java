@@ -86,7 +86,6 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.Movi
 
     @Override
     public int getItemCount() {
-        Log.v("result", "" + movieDatas.size());
         return movieDatas.size();
     }
 

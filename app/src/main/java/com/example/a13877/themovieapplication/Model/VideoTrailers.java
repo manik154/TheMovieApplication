@@ -2,10 +2,9 @@ package com.example.a13877.themovieapplication.Model;
 
 import java.util.List;
 
-public class VideoTrailers<T> extends
-{
-private int id;
-private List<T> results;
+public class VideoTrailers extends VideoTrialer2<VideoTrailerContent> {
+    private int id;
+
 
     public int getId() {
         return id;
@@ -15,11 +14,4 @@ private List<T> results;
         this.id = id;
     }
 
-    public List<T> getResults() {
-        return results;
-    }
-
-    public void setResults(List<T> results) {
-        this.results = results;
-    }
 }

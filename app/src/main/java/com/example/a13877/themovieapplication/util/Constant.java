@@ -12,12 +12,14 @@ public class Constant {
     public static final String MOVIE = "/movie";
     public static final String TV = "/tv";
     public static final String REVIEWS = "/reviews";
+    public static final String VIDEOS = "/videos";
 
     public static final String GENRE = "/genre";
     public static final String LANG_EN = "en-US";
     public static final String MOVIE_PATH = VERSION + MOVIE;
     public static final String TV_PATH = VERSION + TV;
     public static final String GENRE_PATH = VERSION + GENRE+MOVIE;
+    public static final String GENRE_PATH2 = VERSION + GENRE+TV;
 
 
     //https://api.themoviedb.org/3/movie/popular?api_key=<<api_key>>&language=en-US&page=1
