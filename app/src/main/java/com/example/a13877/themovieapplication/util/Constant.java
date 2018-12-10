@@ -1,6 +1,5 @@
 package com.example.a13877.themovieapplication.util;
 
-import com.leinardi.android.speeddial.BuildConfig;
 
 
 public class Constant {

@@ -150,7 +150,7 @@
                         android:layout_height="wrap_content" />
                 </LinearLayout>
 
-                <include layout="@layout/seperator_layout"></include>
+                <include layout="@layout/seperator_layout"> </include>
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -217,7 +217,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
         android:clickable="true"
-        android:src="@drawable/ic_menu_share"
+        android:src="@drawable/similarmovieicon"
         app:elevation="6dp"
         app:layout_anchor="@id/app_bar_layout"
         app:layout_anchorGravity="bottom|right|end"

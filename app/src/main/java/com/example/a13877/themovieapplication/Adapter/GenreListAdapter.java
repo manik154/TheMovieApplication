@@ -12,7 +12,6 @@ import android.widget.TextView;
 import com.example.a13877.themovieapplication.Model.TvGenreTypes;
 import com.example.a13877.themovieapplication.Model.VideoTrailerContent;
 import com.example.a13877.themovieapplication.R;
-import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;

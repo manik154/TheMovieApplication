@@ -10,8 +10,10 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.example.a13877.themovieapplication.Model.VideoTrailerContent;
 import com.example.a13877.themovieapplication.R;
+import com.example.a13877.themovieapplication.api.ApiService;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -88,7 +90,6 @@ public class GetTrialersListAdapter extends RecyclerView.Adapter<GetTrialersList
 
     @Override
     public int getItemCount() {
-        Log.v("result", "" + videoTrailerContents.size());
         return videoTrailerContents.size();
     }
 
@@ -110,11 +111,13 @@ public class GetTrialersListAdapter extends RecyclerView.Adapter<GetTrialersList
 
         public void bind(VideoTrailerContent videoTrailerContent) {
 
-            Picasso.with(context)
+            /*Picasso.with(context)
+                    .load(R.drawable.moviedb_about)
+                    .into(img_poster);*/
+            text_trialer_name.setText(videoTrailerContent.getName());
+            Glide.with(context)
                     .load(R.drawable.moviedb_about)
                     .into(img_poster);
-            text_trialer_name.setText(videoTrailerContent.getName());
-
         }
     }
 

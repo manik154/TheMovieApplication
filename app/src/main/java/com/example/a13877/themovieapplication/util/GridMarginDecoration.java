@@ -5,10 +5,6 @@ import android.graphics.Rect;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
-/**
- * Created by Wim on 5/29/17.
- */
-
 public class GridMarginDecoration extends RecyclerView.ItemDecoration {
 
     private int left;

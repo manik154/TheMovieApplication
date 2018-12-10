@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.example.a13877.themovieapplication.Model.GetSimilarmovies;
 import com.example.a13877.themovieapplication.R;
 import com.example.a13877.themovieapplication.api.ApiService;
@@ -91,7 +92,7 @@ public class GetSimilarMoviesAdapter extends RecyclerView.Adapter<GetSimilarMovi
 
     @Override
     public int getItemCount() {
-        Log.v("result", "" + getSimilarmovies.size());
+
         return getSimilarmovies.size();
     }
 
@@ -113,7 +114,11 @@ public class GetSimilarMoviesAdapter extends RecyclerView.Adapter<GetSimilarMovi
         public void bind(GetSimilarmovies getSimilarmovies) {
             voteAverage.setText("Average Rating " + String.valueOf(getSimilarmovies.getVoteAverage()));
             // title.setText(getSimilarmovies.getTitle());
-            Picasso.with(context)
+          /*  Picasso.with(context)
+                    .load(ApiService.IMG_URL + getSimilarmovies.getPosterPath())
+                    .into(posterPath);*/
+
+            Glide.with(context)
                     .load(ApiService.IMG_URL + getSimilarmovies.getPosterPath())
                     .into(posterPath);
         }

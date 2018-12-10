@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
 import com.example.a13877.themovieapplication.Model.MovieData;
 import com.example.a13877.themovieapplication.R;
 import com.example.a13877.themovieapplication.api.ApiService;
@@ -103,7 +104,10 @@ public class TvListAdapter extends RecyclerView.Adapter<TvListAdapter.MovieViewH
         }
 
         public void bind(MovieData movieData) {
-            Picasso.with(context)
+            /*Picasso.with(context)
+                    .load(ApiService.IMG_URL + movieData.getPosterPath())
+                    .into(img);
+            */Glide.with(context)
                     .load(ApiService.IMG_URL + movieData.getPosterPath())
                     .into(img);
         }

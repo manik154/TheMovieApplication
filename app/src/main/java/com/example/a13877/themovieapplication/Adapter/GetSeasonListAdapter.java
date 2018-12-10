@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.example.a13877.themovieapplication.Model.TvSeasonList;
 import com.example.a13877.themovieapplication.R;
 import com.example.a13877.themovieapplication.api.ApiService;
@@ -109,7 +110,10 @@ public class GetSeasonListAdapter extends RecyclerView.Adapter<GetSeasonListAdap
         }
 
         public void bind(TvSeasonList tvSeasonList) {
-            Picasso.with(context)
+        /*    Picasso.with(context)
+                    .load(ApiService.IMG_URL + tvSeasonList.getPoster_path())
+                    .into(img);*/
+            Glide.with(context)
                     .load(ApiService.IMG_URL + tvSeasonList.getPoster_path())
                     .into(img);
             seasonNumber.setText("Season:- "+String.valueOf(tvSeasonList.getSeason_number()));

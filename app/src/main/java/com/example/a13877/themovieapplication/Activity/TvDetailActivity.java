@@ -1,8 +1,10 @@
 package com.example.a13877.themovieapplication.Activity;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -25,6 +27,7 @@ import com.example.a13877.themovieapplication.Model.TvShow;
 import com.example.a13877.themovieapplication.Model.TvShowGenre;
 import com.example.a13877.themovieapplication.R;
 import com.example.a13877.themovieapplication.api.ApiService;
+import com.example.a13877.themovieapplication.util.AppBarStateChangeListener;
 import com.squareup.picasso.Picasso;
 
 import java.net.SocketTimeoutException;
@@ -43,6 +46,7 @@ public class TvDetailActivity extends AppCompatActivity {
     private TextView name;
     private RecyclerView recyclerView;
     private RecyclerView recyclerViewSeasonList;
+    private AppBarLayout appBarLayout;
     private ReviewListAdapter reviewListAdapter;
     private GetSeasonListAdapter getSeasonListAdapter;
     private ImageView posterpath;
@@ -55,6 +59,9 @@ public class TvDetailActivity extends AppCompatActivity {
     private TvShow tvShow;
     private TextView viewSeason;
     private Toolbar toolbar;
+    private ProgressDialog progressDialog;
+    private MenuItem item;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -69,6 +76,7 @@ public class TvDetailActivity extends AppCompatActivity {
         apiService = new ApiService();
         recyclerView = findViewById(R.id.recyclerViewReviewList);
         recyclerViewSeasonList = findViewById(R.id.recyclerSeasonList);
+        appBarLayout = findViewById(R.id.app_bar_layout);
         getSeasonListAdapter = new GetSeasonListAdapter(getApplicationContext());
         image = findViewById(R.id.image);
         name = findViewById(R.id.titleShow);
@@ -80,7 +88,34 @@ public class TvDetailActivity extends AppCompatActivity {
         genre = findViewById(R.id.genre);
         floatingActionButton = findViewById(R.id.fab);
         posterpath = findViewById(R.id.posterPath);
+        progressDialog = new ProgressDialog(TvDetailActivity.this);
+        progressDialog.setMessage("Loading...");
+        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        progressDialog.show();
+        progressDialog.setCancelable(false);
 
+        appBarLayout.addOnOffsetChangedListener(new AppBarStateChangeListener() {
+            @Override
+            public void onStateChanged(AppBarLayout appBarLayout, State state) {
+
+
+                if ((state.name()).equals("COLLAPSED"))
+                {
+                    floatingActionButton.hide();
+                    item.setVisible(true);
+
+                } else
+                {
+                    try {
+                        item.setVisible(false);
+                    } catch (Exception e) {
+
+                    }
+                }
+
+
+            }
+        });
         id = getIntent().getExtras().getInt("key");
         if (id != 0) {
             loadSpecificTvShowContent(id);
@@ -199,6 +234,7 @@ public class TvDetailActivity extends AppCompatActivity {
 
                     recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
                     recyclerView.setHasFixedSize(false);
+                    progressDialog.dismiss();
                     recyclerView.setAdapter(reviewListAdapter);
 
                 } else {
@@ -223,6 +259,10 @@ public class TvDetailActivity extends AppCompatActivity {
 
         super.onCreateOptionsMenu(menu);
         getMenuInflater().inflate(R.menu.menu_share, menu);
+
+        item = menu.findItem(R.id.similar);
+        item.setVisible(false);
+
         return true;
     }
 
@@ -230,6 +270,12 @@ public class TvDetailActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.share) {
             Toast.makeText(this, "You Clicked Share Option", Toast.LENGTH_SHORT).show();
+        }
+
+        if (item.getItemId() == R.id.similar) {
+            Intent intent = new Intent(TvDetailActivity.this, SimilarMovieslist.class);
+            intent.putExtra("IdSimilar", id);
+            startActivity(intent);
         }
         return super.onOptionsItemSelected(item);
     }

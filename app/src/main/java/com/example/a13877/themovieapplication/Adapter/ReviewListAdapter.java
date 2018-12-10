@@ -12,8 +12,6 @@ import android.widget.TextView;
 import com.example.a13877.themovieapplication.Model.MovieData;
 import com.example.a13877.themovieapplication.Model.ReviewResultTypes;
 import com.example.a13877.themovieapplication.R;
-import com.example.a13877.themovieapplication.api.ApiService;
-import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;

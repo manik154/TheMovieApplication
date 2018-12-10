@@ -53,6 +53,7 @@ public class SimilarTvShow extends AppCompatActivity implements GetSimilarMovies
 
         toolbar.setTitle("Similar TvShows");
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         similarListAdapter = new GetSimilarMoviesAdapter(getApplicationContext());
         similarListAdapter.setImageClickedListener(this);
@@ -99,6 +100,12 @@ public class SimilarTvShow extends AppCompatActivity implements GetSimilarMovies
         addScroll();
         loadSimilarTvShows(id);
 
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
     }
     private void loadSimilarTvShows(int id) {
 

@@ -1,5 +1,6 @@
 package com.example.a13877.themovieapplication.Fragment;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
@@ -56,6 +57,7 @@ public class MoviesFragment extends Fragment implements MovieListAdapter.OnMovie
     private ApiService apiService;
     public MovieData movieData;
 
+
     private EndlessRecyclerOnScrollListener endlessRecyclerOnScrollListener;
 
     @Nullable
@@ -65,6 +67,7 @@ public class MoviesFragment extends Fragment implements MovieListAdapter.OnMovie
         //change R.layout.yourlayoutfilename for each of your fragments
         View view = inflater.inflate(R.layout.fragment_menu_1, container, false);
         recyclerViewMovieList = view.findViewById(R.id.recyclerViewMovieList);
+
 
         gridLayoutManager = new GridLayoutManager(getContext(), 2);
         swipeRefreshLayout = view.findViewById(R.id.refresh);
@@ -79,6 +82,8 @@ public class MoviesFragment extends Fragment implements MovieListAdapter.OnMovie
         getActivity().setTitle("Movies" + " (" + "Most Popular" + ")");
         setHasOptionsMenu(true);
         movieListAdapter = new MovieListAdapter(getContext());
+
+
 
         recyclerViewMovieList.setLayoutManager(gridLayoutManager);
       //  recyclerViewMovieList.addItemDecoration(new GridMarginDecoration(getContext(), 1, 1, 1, 1));
@@ -154,7 +159,7 @@ public class MoviesFragment extends Fragment implements MovieListAdapter.OnMovie
                     if (movie != null) {
                         if (movieListAdapter != null) {
                             movieListAdapter.addAll(movie.getResults());
-                            Toast.makeText(getContext(), "Loaded", Toast.LENGTH_SHORT).show();
+
                         }
                     } else {
                         Toast.makeText(getContext(), "No Data!", Toast.LENGTH_LONG).show();

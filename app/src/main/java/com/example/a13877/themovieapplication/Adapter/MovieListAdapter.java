@@ -7,11 +7,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+
+import com.bumptech.glide.Glide;
 import com.example.a13877.themovieapplication.Model.MovieData;
 import com.example.a13877.themovieapplication.R;
 import com.example.a13877.themovieapplication.api.ApiService;
-import com.squareup.picasso.Picasso;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -103,7 +103,10 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.Movi
         }
 
         public void bind(MovieData movieData) {
-           Picasso.with(context)
+        /*   Picasso.with(context)
+                    .load()
+                    .into(img);*/
+            Glide.with(context)
                     .load(ApiService.IMG_URL + movieData.getPosterPath())
                     .into(img);
         }

@@ -1,8 +1,10 @@
 package com.example.a13877.themovieapplication.Activity;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -12,9 +14,12 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import com.example.a13877.themovieapplication.Adapter.GetTrialersListAdapter;
 import com.example.a13877.themovieapplication.Adapter.ReviewListAdapter;
 import com.example.a13877.themovieapplication.Model.MovieDetails;
@@ -22,6 +27,7 @@ import com.example.a13877.themovieapplication.Model.Review;
 import com.example.a13877.themovieapplication.Model.VideoTrailers;
 import com.example.a13877.themovieapplication.R;
 import com.example.a13877.themovieapplication.api.ApiService;
+import com.example.a13877.themovieapplication.util.AppBarStateChangeListener;
 import com.example.a13877.themovieapplication.util.Constant;
 import com.squareup.picasso.Picasso;
 
@@ -43,14 +49,16 @@ public class MovieDetailActivity extends AppCompatActivity {
     private TextView runtime;
     private TextView voteAverage;
     private TextView taglline;
+    private AppBarLayout appBarLayout;
+    private ProgressDialog progressDialog;
     private TextView homepage;
     private RecyclerView recyclerViewReview;
     private ReviewListAdapter reviewListAdapter;
     private GetTrialersListAdapter getTrialersListAdapter;
-
     private RecyclerView recyclerViewTrailerList;
     private FloatingActionButton floatingActionButton;
     private int id;
+    private MenuItem item;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -58,10 +66,10 @@ public class MovieDetailActivity extends AppCompatActivity {
         setContentView(R.layout.movie_detail_activity);
 
         toolbar = findViewById(R.id.toolbar);
-
         toolbar.setTitle("");
         setSupportActionBar(toolbar);
 
+        appBarLayout = findViewById(R.id.app_bar_layout);
         textviewTitle = findViewById(R.id.titleFilm);
         textViewReleaseDates = findViewById(R.id.releaseDate);
         textViewOverView = findViewById(R.id.filmAbout);
@@ -70,6 +78,12 @@ public class MovieDetailActivity extends AppCompatActivity {
         voteAverage = findViewById(R.id.voteAverage);
         taglline = findViewById(R.id.tagline);
         homepage = (TextView) findViewById(R.id.homepage);
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setMessage("Loading...");
+        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER); // Progress Dialog Style Spinner
+        progressDialog.show();
+        progressDialog.setCancelable(false);
+
 
         floatingActionButton = findViewById(R.id.fab);
         recyclerViewReview = findViewById(R.id.recyclerViewReviewList);
@@ -87,12 +101,37 @@ public class MovieDetailActivity extends AppCompatActivity {
             }
         });
 
+        appBarLayout.addOnOffsetChangedListener(new AppBarStateChangeListener() {
+            @Override
+            public void onStateChanged(AppBarLayout appBarLayout, State state) {
+
+
+                if ((state.name()).equals("COLLAPSED")) {
+                    floatingActionButton.hide();
+                    item.setVisible(true);
+
+                } else {
+                    try {
+                        item.setVisible(false);
+                    } catch (Exception e) {
+
+                    }
+                }
+
+
+            }
+        });
+
         if (id != 0)
             loadMovieDetails(id);
-        loadReviewDetails(id);
 
     }
 
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
+    }
 
     private void loadReviewDetails(final int id) {
 
@@ -135,12 +174,11 @@ public class MovieDetailActivity extends AppCompatActivity {
             public void onResponse(Call call, Response response) {
                 VideoTrailers videoTrailers = (VideoTrailers) response.body();
                 if (videoTrailers != null) {
-                    Log.v("hope",""+videoTrailers.getResults());
-                    getTrialersListAdapter=new GetTrialersListAdapter(getApplicationContext());
+                    getTrialersListAdapter = new GetTrialersListAdapter(getApplicationContext());
                     recyclerViewTrailerList.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
                     recyclerViewTrailerList.setHasFixedSize(true);
                     getTrialersListAdapter.addAll(videoTrailers.getResults());
-
+                    progressDialog.dismiss();
                     recyclerViewTrailerList.setAdapter(getTrialersListAdapter);
 
                 } else {
@@ -161,6 +199,8 @@ public class MovieDetailActivity extends AppCompatActivity {
     }
 
     private void loadMovieDetails(int id) {
+
+        loadReviewDetails(id);
         loadMovieTrialers(id);
 
         apiService.getMovieDetail(id, new Callback() {
@@ -170,8 +210,6 @@ public class MovieDetailActivity extends AppCompatActivity {
                 MovieDetails movieDetail = (MovieDetails) response.body();
                 if (movieDetail != null) {
 
-                    Toast.makeText(MovieDetailActivity.this, "" + movieDetail.getId(), Toast.LENGTH_SHORT).show();
-
                     textviewTitle.setText(movieDetail.getOriginalTitle());
                     textViewReleaseDates.setText("Release Date:- " + movieDetail.getReleaseDate());
                     textViewOverView.setText(movieDetail.getOverview());
@@ -180,8 +218,7 @@ public class MovieDetailActivity extends AppCompatActivity {
                     voteAverage.setText("Average Rating:- " + String.valueOf(movieDetail.getVoteAverage()));
                     taglline.setText(String.valueOf(movieDetail.getTagline()));
 
-                    Picasso.with(MovieDetailActivity.this).load(Constant.IMG_URL + movieDetail.getPosterPath())
-                            .placeholder(R.drawable.kitten).into(imagePoster);
+                    Picasso.with(MovieDetailActivity.this).load(Constant.IMG_URL + movieDetail.getPosterPath()).into(imagePoster);
                     if (movieDetail.getHomepage() == null) {
                         homepage.setText("Not Available");
                     } else {
@@ -210,6 +247,10 @@ public class MovieDetailActivity extends AppCompatActivity {
 
         super.onCreateOptionsMenu(menu);
         getMenuInflater().inflate(R.menu.menu_share, menu);
+
+        item = menu.findItem(R.id.similar);
+        item.setVisible(false);
+
         return true;
     }
 
@@ -218,6 +259,13 @@ public class MovieDetailActivity extends AppCompatActivity {
         if (item.getItemId() == R.id.share) {
             Toast.makeText(this, "You Clicked Share Option", Toast.LENGTH_SHORT).show();
         }
+        if (item.getItemId() == R.id.similar) {
+            Intent intent = new Intent(MovieDetailActivity.this, SimilarMovieslist.class);
+            intent.putExtra("IdSimilar", id);
+            startActivity(intent);
+        }
         return super.onOptionsItemSelected(item);
     }
+
+
 }

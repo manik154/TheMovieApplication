@@ -11,6 +11,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.a13877.themovieapplication.Adapter.GetSimilarMoviesAdapter;
@@ -19,6 +20,8 @@ import com.example.a13877.themovieapplication.Model.GetSimilarmovies;
 import com.example.a13877.themovieapplication.R;
 import com.example.a13877.themovieapplication.api.ApiService;
 import com.example.a13877.themovieapplication.util.EndlessRecyclerOnScrollListener;
+
+import org.w3c.dom.Text;
 
 import java.net.SocketTimeoutException;
 
@@ -37,6 +40,7 @@ public class SimilarMovieslist extends AppCompatActivity implements GetSimilarMo
     private ApiService apiService;
     private GetSimilarmovies getSimilarmovies;
     private SwipeRefreshLayout swipeRefreshLayout;
+    private TextView none;
     private EndlessRecyclerOnScrollListener endlessRecyclerOnScrollListener;
 
     @Override
@@ -46,7 +50,7 @@ public class SimilarMovieslist extends AppCompatActivity implements GetSimilarMo
         toolbar=findViewById(R.id.toolbar);
 
         gridLayoutManager=new GridLayoutManager(getApplicationContext(),2);
-
+none=findViewById(R.id.none);
         swipeRefreshLayout=findViewById(R.id.refresh);
         recyclerViewSimilar = findViewById(R.id.recyclerViewSimiaList);
 
@@ -54,6 +58,8 @@ public class SimilarMovieslist extends AppCompatActivity implements GetSimilarMo
 
         toolbar.setTitle("Similar Movies");
         setSupportActionBar(toolbar);
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         similarListAdapter = new GetSimilarMoviesAdapter(getApplicationContext());
         similarListAdapter.setImageClickedListener(this);
@@ -73,6 +79,12 @@ public class SimilarMovieslist extends AppCompatActivity implements GetSimilarMo
         if (id != 0) {
             loadSimilarMovies(id);
         }
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
     }
     private void addScroll() {
         endlessRecyclerOnScrollListener = new EndlessRecyclerOnScrollListener(gridLayoutManager, page, limit) {
@@ -117,7 +129,8 @@ public class SimilarMovieslist extends AppCompatActivity implements GetSimilarMo
             public void onResponse(Call call, Response response) {
                 GetSimilar getSimilar = (GetSimilar) response.body();
 
-                if (getSimilar != null) {
+                if (getSimilar != null)
+                {
                     similarListAdapter.addAll(getSimilar.getResults());
 
                     recyclerViewSimilar.setLayoutManager(gridLayoutManager);
@@ -125,7 +138,7 @@ public class SimilarMovieslist extends AppCompatActivity implements GetSimilarMo
                     recyclerViewSimilar.setAdapter(similarListAdapter);
 
                 } else {
-                    Toast.makeText(SimilarMovieslist.this, "No Data!", Toast.LENGTH_LONG).show();
+                    none.setVisibility(View.VISIBLE);
                 }
 
                 if (swipeRefreshLayout != null)
