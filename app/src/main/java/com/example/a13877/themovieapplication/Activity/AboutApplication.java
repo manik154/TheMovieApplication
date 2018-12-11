@@ -17,8 +17,14 @@ public class AboutApplication extends AppCompatActivity {
         setContentView(R.layout.about_application);
         toolbar = findViewById(R.id.toolbar);
         toolbar.setTitle("About Application");
-
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
     }
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
+    }
+
 }
