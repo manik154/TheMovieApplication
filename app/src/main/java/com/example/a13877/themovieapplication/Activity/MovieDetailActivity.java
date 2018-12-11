@@ -2,11 +2,15 @@ package com.example.a13877.themovieapplication.Activity;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.graphics.Palette;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -20,6 +24,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.example.a13877.themovieapplication.Adapter.GetTrialersListAdapter;
 import com.example.a13877.themovieapplication.Adapter.ReviewListAdapter;
 import com.example.a13877.themovieapplication.Model.MovieDetails;
@@ -30,8 +35,10 @@ import com.example.a13877.themovieapplication.api.ApiService;
 import com.example.a13877.themovieapplication.util.AppBarStateChangeListener;
 import com.example.a13877.themovieapplication.util.Constant;
 import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Target;
 
 import java.net.SocketTimeoutException;
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -58,6 +65,7 @@ public class MovieDetailActivity extends AppCompatActivity {
     private RecyclerView recyclerViewTrailerList;
     private FloatingActionButton floatingActionButton;
     private int id;
+    private Bitmap bitmap;
     private MenuItem item;
 
     @Override
@@ -68,7 +76,7 @@ public class MovieDetailActivity extends AppCompatActivity {
         toolbar = findViewById(R.id.toolbar);
         toolbar.setTitle("");
         setSupportActionBar(toolbar);
-
+getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         appBarLayout = findViewById(R.id.app_bar_layout);
         textviewTitle = findViewById(R.id.titleFilm);
         textViewReleaseDates = findViewById(R.id.releaseDate);
@@ -86,6 +94,7 @@ public class MovieDetailActivity extends AppCompatActivity {
 
 
         floatingActionButton = findViewById(R.id.fab);
+
         recyclerViewReview = findViewById(R.id.recyclerViewReviewList);
         recyclerViewTrailerList = findViewById(R.id.recyclerViewTrailerList);
 
@@ -218,7 +227,57 @@ public class MovieDetailActivity extends AppCompatActivity {
                     voteAverage.setText("Average Rating:- " + String.valueOf(movieDetail.getVoteAverage()));
                     taglline.setText(String.valueOf(movieDetail.getTagline()));
 
-                    Picasso.with(MovieDetailActivity.this).load(Constant.IMG_URL + movieDetail.getPosterPath()).into(imagePoster);
+
+                    Picasso.with(MovieDetailActivity.this).load(Constant.IMG_URL + movieDetail.getPosterPath()).into(new Target() {
+                        @Override
+                        public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
+                            assert imagePoster != null;
+                            imagePoster.setImageBitmap(bitmap);
+                            Palette.from(bitmap)
+                                    .generate(new Palette.PaletteAsyncListener() {
+                                        @Override
+                                        public void onGenerated(Palette palette) {
+
+
+                                            Palette.Swatch textSwatch = palette.getLightMutedSwatch();
+
+                                            if (textSwatch == null) {
+                                                Toast.makeText(MovieDetailActivity.this, "Null swatch :(", Toast.LENGTH_SHORT).show();
+                                                return;
+                                            }
+                                            appBarLayout.setBackgroundColor(textSwatch.getRgb());
+/*
+                                            titleColorText.setTextColor(textSwatch.getTitleTextColor());
+                                            bodyColorText.setTextColor(textSwatch.getBodyTextColor());*/
+                                      }
+                                    });
+                        }
+
+                        @Override
+                        public void onBitmapFailed(Drawable errorDrawable) {
+
+                        }
+
+                        @Override
+                        public void onPrepareLoad(Drawable placeHolderDrawable) {
+
+                        }
+                    });
+              /*       bitmap = BitmapFactory.decodeResource(getResources(),R.drawable.kitten);
+                    Palette.from(bitmap)
+                            .generate(new Palette.PaletteAsyncListener() {
+                                @Override
+                                public void onGenerated(Palette palette) {
+                                    Palette.Swatch textSwatch = palette.getVibrantSwatch();
+                                    if (textSwatch == null) {
+                                        Toast.makeText(MovieDetailActivity.this, "Null swatch :(", Toast.LENGTH_SHORT).show();
+                                        return;
+                                    }
+                                    appBarLayout.setBackgroundColor(textSwatch.getRgb());
+                                }
+                            });*/
+
+
                     if (movieDetail.getHomepage() == null) {
                         homepage.setText("Not Available");
                     } else {

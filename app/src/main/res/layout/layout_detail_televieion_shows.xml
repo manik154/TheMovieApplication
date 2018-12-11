@@ -43,6 +43,7 @@
 
     <android.support.v4.widget.NestedScrollView
         android:id="@+id/scroll"
+        android:layout_marginTop="1dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:clipToPadding="false"
@@ -70,6 +71,7 @@
 
                     <ImageView
                         android:id="@+id/image"
+                        android:layout_marginTop="2dp"
                         android:layout_width="150dp"
                         android:layout_height="200dp" />
 
@@ -123,7 +125,7 @@
 
                 </LinearLayout>
 
-                <include layout="@layout/seperator_layout"></include>
+                <include layout="@layout/new_separator"></include>
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -225,7 +227,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
         android:clickable="true"
-        android:src="@drawable/similarmovieicon"
+        android:src="@drawable/similar_floating_icon"
         app:elevation="6dp"
         app:layout_anchor="@id/app_bar_layout"
         app:layout_anchorGravity="bottom|right|end"

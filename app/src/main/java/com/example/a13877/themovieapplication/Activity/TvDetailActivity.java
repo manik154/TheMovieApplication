@@ -2,11 +2,14 @@ package com.example.a13877.themovieapplication.Activity;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.graphics.Palette;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -29,6 +32,7 @@ import com.example.a13877.themovieapplication.R;
 import com.example.a13877.themovieapplication.api.ApiService;
 import com.example.a13877.themovieapplication.util.AppBarStateChangeListener;
 import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Target;
 
 import java.net.SocketTimeoutException;
 
@@ -72,7 +76,7 @@ public class TvDetailActivity extends AppCompatActivity {
 
         toolbar.setTitle("");
         setSupportActionBar(toolbar);
-
+getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         apiService = new ApiService();
         recyclerView = findViewById(R.id.recyclerViewReviewList);
         recyclerViewSeasonList = findViewById(R.id.recyclerSeasonList);
@@ -99,13 +103,11 @@ public class TvDetailActivity extends AppCompatActivity {
             public void onStateChanged(AppBarLayout appBarLayout, State state) {
 
 
-                if ((state.name()).equals("COLLAPSED"))
-                {
+                if ((state.name()).equals("COLLAPSED")) {
                     floatingActionButton.hide();
                     item.setVisible(true);
 
-                } else
-                {
+                } else {
                     try {
                         item.setVisible(false);
                     } catch (Exception e) {
@@ -173,11 +175,44 @@ public class TvDetailActivity extends AppCompatActivity {
 
                     Picasso.with(getApplicationContext())
                             .load(ApiService.IMG_URL + tvShow.getPoster_path())
-                            .into(image);
-                  /*  Picasso.with(getApplicationContext())
-                            .load(ApiService.IMG_URL + tvShow.getPoster_path())
-                            .into(posterpath);
-*/
+                            .into(new Target() {
+                                @Override
+                                public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
+                                    assert image != null;
+                                    image.setImageBitmap(bitmap);
+                                    Palette.from(bitmap)
+                                            .generate(new Palette.PaletteAsyncListener() {
+                                                @Override
+                                                public void onGenerated(Palette palette) {
+
+
+                                                    Palette.Swatch textSwatch = palette.getLightMutedSwatch();
+
+                                                    if (textSwatch == null) {
+                                                        Toast.makeText(TvDetailActivity.this, "Null swatch :(", Toast.LENGTH_SHORT).show();
+                                                        return;
+                                                    }
+                                                    appBarLayout.setBackgroundColor(textSwatch.getRgb());
+/*
+                                            titleColorText.setTextColor(textSwatch.getTitleTextColor());
+                                            bodyColorText.setTextColor(textSwatch.getBodyTextColor());*/
+                                                }
+                                            });
+                                }
+
+                                @Override
+                                public void onBitmapFailed(Drawable errorDrawable)
+                                {
+
+                                }
+
+                                @Override
+                                public void onPrepareLoad(Drawable placeHolderDrawable) {
+
+                                }
+                            });
+
+
                     StringBuilder s = new StringBuilder();
                     for (int i = 0; i < tvShow.getGenres().size(); i++) {
                         s.append(tvShow.getGenres().get(i).getGenreType()).append(" ").append(",").append(" ");
