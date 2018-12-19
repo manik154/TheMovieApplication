@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.example.a13877.themovieapplication.Activity.MovieDetailActivity;
 import com.example.a13877.themovieapplication.Model.VideoTrailerContent;
 import com.example.a13877.themovieapplication.R;
 import com.example.a13877.themovieapplication.api.ApiService;
@@ -24,7 +25,7 @@ public class GetTrialersListAdapter extends RecyclerView.Adapter<GetTrialersList
 
     private List<VideoTrailerContent> videoTrailerContents;
     private Context context;
-    //private OnMovieItemSelectedListener onMovieItemSelectedListener;
+    private OnTrailerItemSelectedListener onTrailerItemSelectedListener;
 
 
     public GetTrialersListAdapter(Context context) {
@@ -65,19 +66,19 @@ public class GetTrialersListAdapter extends RecyclerView.Adapter<GetTrialersList
     public TrailersViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.user_trialer_list, parent, false);
         final TrailersViewHolder trailersViewHolder = new TrailersViewHolder(view);
-        /*movieViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+        trailersViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                int adapterPos = movieViewHolder.getAdapterPosition();
+                int adapterPos = trailersViewHolder.getAdapterPosition();
                 if (adapterPos != RecyclerView.NO_POSITION) {
-                    if (onMovieItemSelectedListener != null) {
+                    if (onTrailerItemSelectedListener != null) {
                         Log.v("gir","1");
-                        onMovieItemSelectedListener.onItemClick(movieViewHolder.itemView, adapterPos);
+                        onTrailerItemSelectedListener.onItemClick(trailersViewHolder.itemView, adapterPos);
                     }
                 }
             }
-        });*/
+        });
 
         return trailersViewHolder;
     }
@@ -93,10 +94,11 @@ public class GetTrialersListAdapter extends RecyclerView.Adapter<GetTrialersList
         return videoTrailerContents.size();
     }
 
-    /* public void setOnMovieItemSelectedListener(OnMovieItemSelectedListener onMovieItemSelectedListener) {
-         this.onMovieItemSelectedListener = onMovieItemSelectedListener;
+     public void setOnTrailerItemSelectedListener(OnTrailerItemSelectedListener onTrailerItemSelectedListener) {
+         this.onTrailerItemSelectedListener = onTrailerItemSelectedListener;
      }
- */
+
+
     public class TrailersViewHolder extends RecyclerView.ViewHolder {
 
         ImageView img_poster;
@@ -121,9 +123,9 @@ public class GetTrialersListAdapter extends RecyclerView.Adapter<GetTrialersList
         }
     }
 
-    /*public interface OnMovieItemSelectedListener {
+    public interface OnTrailerItemSelectedListener {
         void onItemClick(View v, int position);
     }
-*/
+
 
 }

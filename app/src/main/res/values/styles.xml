@@ -18,7 +18,12 @@
         <item name="colorControlNormal">#fff</item>
         <item name="colorControlHighlight">#3fff</item>
     </style>
-
+<style name="splashscreen" parent="Theme.AppCompat.Light.NoActionBar">
+    <item name="android:windowBackground">@drawable/layout_splash</item>
+    <item name="colorAccent">@color/colorAccent</item>
+    <item name="colorPrimary">@color/colorPrimary</item>
+    <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+</style>
 
 
 </resources>

@@ -5,10 +5,13 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.ShareCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.graphics.Palette;
 import android.support.v7.widget.LinearLayoutManager;
@@ -29,6 +32,7 @@ import com.example.a13877.themovieapplication.Adapter.GetTrialersListAdapter;
 import com.example.a13877.themovieapplication.Adapter.ReviewListAdapter;
 import com.example.a13877.themovieapplication.Model.MovieDetails;
 import com.example.a13877.themovieapplication.Model.Review;
+import com.example.a13877.themovieapplication.Model.VideoTrailerContent;
 import com.example.a13877.themovieapplication.Model.VideoTrailers;
 import com.example.a13877.themovieapplication.R;
 import com.example.a13877.themovieapplication.api.ApiService;
@@ -44,7 +48,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class MovieDetailActivity extends AppCompatActivity {
+public class MovieDetailActivity extends AppCompatActivity implements GetTrialersListAdapter.OnTrailerItemSelectedListener {
 
     private Toolbar toolbar;
     private ApiService apiService;
@@ -67,6 +71,8 @@ public class MovieDetailActivity extends AppCompatActivity {
     private int id;
     private Bitmap bitmap;
     private MenuItem item;
+    private MovieDetails movieDetail;
+    private CollapsingToolbarLayout collapsingToolbarLayout;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -74,9 +80,10 @@ public class MovieDetailActivity extends AppCompatActivity {
         setContentView(R.layout.movie_detail_activity);
 
         toolbar = findViewById(R.id.toolbar);
-        toolbar.setTitle("");
         setSupportActionBar(toolbar);
-getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        collapsingToolbarLayout = findViewById(R.id.collapsing_toolbar);
         appBarLayout = findViewById(R.id.app_bar_layout);
         textviewTitle = findViewById(R.id.titleFilm);
         textViewReleaseDates = findViewById(R.id.releaseDate);
@@ -92,7 +99,8 @@ getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         progressDialog.show();
         progressDialog.setCancelable(false);
 
-
+        getTrialersListAdapter = new GetTrialersListAdapter(getApplicationContext());
+        getTrialersListAdapter.setOnTrailerItemSelectedListener(this);
         floatingActionButton = findViewById(R.id.fab);
 
         recyclerViewReview = findViewById(R.id.recyclerViewReviewList);
@@ -107,6 +115,25 @@ getSupportActionBar().setDisplayHomeAsUpEnabled(true);
                 Intent intent = new Intent(MovieDetailActivity.this, SimilarMovieslist.class);
                 intent.putExtra("IdSimilar", id);
                 startActivity(intent);
+            }
+        });
+
+        appBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
+            boolean isShow = true;
+            int scrollRange = -1;
+
+            @Override
+            public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
+                if (scrollRange == -1) {
+                    scrollRange = appBarLayout.getTotalScrollRange();
+                }
+                if (scrollRange + verticalOffset == 0) {
+                    collapsingToolbarLayout.setTitle(movieDetail.getOriginalTitle());
+                    isShow = true;
+                } else if (isShow) {
+                    collapsingToolbarLayout.setTitle(" ");//carefull there should a space between double quote otherwise it wont work
+                    isShow = false;
+                }
             }
         });
 
@@ -183,12 +210,12 @@ getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             public void onResponse(Call call, Response response) {
                 VideoTrailers videoTrailers = (VideoTrailers) response.body();
                 if (videoTrailers != null) {
-                    getTrialersListAdapter = new GetTrialersListAdapter(getApplicationContext());
                     recyclerViewTrailerList.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
                     recyclerViewTrailerList.setHasFixedSize(true);
                     getTrialersListAdapter.addAll(videoTrailers.getResults());
                     progressDialog.dismiss();
                     recyclerViewTrailerList.setAdapter(getTrialersListAdapter);
+
 
                 } else {
                     Toast.makeText(MovieDetailActivity.this, "No Data!", Toast.LENGTH_LONG).show();
@@ -216,7 +243,7 @@ getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
             @Override
             public void onResponse(Call call, Response response) {
-                MovieDetails movieDetail = (MovieDetails) response.body();
+                movieDetail = (MovieDetails) response.body();
                 if (movieDetail != null) {
 
                     textviewTitle.setText(movieDetail.getOriginalTitle());
@@ -239,7 +266,7 @@ getSupportActionBar().setDisplayHomeAsUpEnabled(true);
                                         public void onGenerated(Palette palette) {
 
 
-                                            Palette.Swatch textSwatch = palette.getLightMutedSwatch();
+                                            Palette.Swatch textSwatch = palette.getDominantSwatch();
 
                                             if (textSwatch == null) {
                                                 Toast.makeText(MovieDetailActivity.this, "Null swatch :(", Toast.LENGTH_SHORT).show();
@@ -249,7 +276,7 @@ getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 /*
                                             titleColorText.setTextColor(textSwatch.getTitleTextColor());
                                             bodyColorText.setTextColor(textSwatch.getBodyTextColor());*/
-                                      }
+                                        }
                                     });
                         }
 
@@ -316,7 +343,11 @@ getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.share) {
-            Toast.makeText(this, "You Clicked Share Option", Toast.LENGTH_SHORT).show();
+            ShareCompat.IntentBuilder.from(this)
+                    .setType("text/plain")
+                    .setChooserTitle("Application Name")
+                    .setText("http://play.google.com/store/apps/details?id=" + this.getPackageName())
+                    .startChooser();
         }
         if (item.getItemId() == R.id.similar) {
             Intent intent = new Intent(MovieDetailActivity.this, SimilarMovieslist.class);
@@ -327,4 +358,16 @@ getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
 
+    @Override
+    public void onItemClick(View v, int position) {
+        VideoTrailerContent videoTrailerContent;
+        videoTrailerContent = getTrialersListAdapter.getItem(position);
+        String key = videoTrailerContent.getKey();
+
+        if (videoTrailerContent.getSite().equals("YouTube")) {
+            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.youtube.com/watch?v=" + key)));
+            Log.i("Video", "Video Playing....");
+        }
+
+    }
 }

@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/direction_card_view"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    card_view:cardElevation="4dp"
+    card_view:cardUseCompatPadding="true">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <RelativeLayout
+            android:id="@+id/relative1"
+            android:layout_width="match_parent"
+            android:minHeight="30dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp">
+
+            <TextView
+                android:id="@+id/episodenumber"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/lato_bold_italic"
+                android:text="1." />
+
+            <TextView
+                android:id="@+id/episodename"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_marginLeft="5dp"
+                android:layout_toEndOf="@+id/episodenumber"
+                android:layout_toRightOf="@+id/episodenumber"
+                android:fontFamily="@font/lato_bold_italic"
+                android:text="First Episode Begins Here Eelocome" />
+
+            <ImageView
+                android:id="@+id/imageview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="5dp"
+                android:layout_marginTop="2dp"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:src="@drawable/arrow_down"
+                android:layout_marginRight="5dp" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:id="@+id/relative2"
+            android:layout_below="@+id/relative1"
+            android:layout_margin="3dp">
+
+            <TextView
+                android:id="@+id/voteaverage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginStart="5dp"
+                android:layout_marginLeft="5dp"
+                android:layout_below="@+id/overviewDetails"
+                android:fontFamily="@font/lato_italic" />
+
+            <TextView
+                android:id="@+id/airdate"
+                android:layout_marginStart="5dp"
+                android:layout_marginLeft="5dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layout_below="@+id/voteaverage"
+                android:fontFamily="@font/lato_italic" />
+
+            <TextView
+                android:id="@+id/overviewDetails"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_marginLeft="5dp"
+                android:fontFamily="@font/lato_italic"
+                android:text="" />
+        </RelativeLayout>
+    </RelativeLayout>
+</android.support.v7.widget.CardView>

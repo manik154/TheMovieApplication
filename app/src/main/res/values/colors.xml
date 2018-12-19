@@ -7,4 +7,5 @@
     <color name="darkGray">#aaaaaa</color>
     <color name="body_text_white">#FFFFFFFF</color>
     <color name="colorBlue">#2c84cc</color>
+    <color name="color_red">#800000</color>
 </resources>

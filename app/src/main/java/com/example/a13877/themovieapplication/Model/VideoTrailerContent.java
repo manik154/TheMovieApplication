@@ -3,6 +3,16 @@ package com.example.a13877.themovieapplication.Model;
 public class VideoTrailerContent {
 
     private String name;
+    private String key;
+    private String site;
+
+    public String getKey() {
+        return key;
+    }
+
+    public void setKey(String key) {
+        this.key = key;
+    }
 
     public String getName() {
         return name;
@@ -12,4 +22,11 @@ public class VideoTrailerContent {
         this.name = name;
     }
 
+    public String getSite() {
+        return site;
+    }
+
+    public void setSite(String site) {
+        this.site = site;
+    }
 }

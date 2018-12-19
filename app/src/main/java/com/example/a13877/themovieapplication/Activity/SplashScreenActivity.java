@@ -11,11 +11,11 @@ import com.example.a13877.themovieapplication.R;
 
 public class SplashScreenActivity extends AppCompatActivity
 {
-    private int SPLASH_SCREEN_TIMEOUT=3000;
+    private int SPLASH_SCREEN_TIMEOUT=2000;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_splash);
+        //setContentView(R.layout.activity_splash);
 
         new Handler().postDelayed(new Runnable() {
             @Override

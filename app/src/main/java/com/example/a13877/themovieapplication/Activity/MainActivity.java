@@ -1,6 +1,8 @@
 package com.example.a13877.themovieapplication.Activity;
 
 
+import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -30,19 +32,32 @@ public class MainActivity extends AppCompatActivity
 
         setSupportActionBar(toolbar);
 
+        if (!isTaskRoot()
+                && getIntent().hasCategory(Intent.CATEGORY_LAUNCHER)
+                && getIntent().getAction() != null
+                && getIntent().getAction().equals(Intent.ACTION_MAIN)) {
+
+            finish();
+            return;
+        }
+
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
         //add this line to display menu1 when the activity is loaded
         displaySelectedScreen(R.id.nav_menu1);
     }
-
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        setContentView(R.layout.activity_main);
+    }
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

@@ -61,6 +61,7 @@
 
                     <ImageView
                         android:id="@+id/image"
+                        android:transitionName="transitionimage"
                         android:layout_width="150dp"
                         android:layout_marginTop="2dp"
                         android:layout_height="200dp"/>
@@ -158,6 +159,8 @@
                     android:layout_marginStart="5dp"
                     android:layout_marginTop="10dp"
                     android:autoLink="web"
+                    android:focusable="true"
+                    android:clickable="true"
                     android:fontFamily="@font/lato_italic"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />

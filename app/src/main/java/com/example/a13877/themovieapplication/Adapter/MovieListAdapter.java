@@ -6,6 +6,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
@@ -16,21 +18,25 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.MovieViewHolder> {
+public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.MovieViewHolder> implements Filterable {
 
     private List<MovieData> movieDatas;
     private Context context;
+    private List<MovieData> movieFilteredDatas;
     private OnMovieItemSelectedListener onMovieItemSelectedListener;
 
 
     public MovieListAdapter(Context context) {
         this.context = context;
         movieDatas = new ArrayList<>();
+        movieFilteredDatas=new ArrayList<>();
     }
 
     private void add(MovieData item) {
+
         movieDatas.add(item);
-        notifyItemInserted(movieDatas.size() - 1);
+        this.movieFilteredDatas=movieDatas;
+        notifyItemInserted(movieFilteredDatas.size() - 1);
     }
 
     public void addAll(List<MovieData> movieDatas) {
@@ -42,7 +48,7 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.Movi
     public void remove(MovieData item) {
         int position = movieDatas.indexOf(item);
         if (position > -1) {
-            movieDatas.remove(position);
+            movieFilteredDatas.remove(position);
             notifyItemRemoved(position);
         }
     }
@@ -53,8 +59,43 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.Movi
         }
     }
 
+    @Override
+    public Filter getFilter() {
+        return new Filter() {
+            @Override
+            protected FilterResults performFiltering(CharSequence charSequence) {
+                String charString = charSequence.toString();
+                if (charString.isEmpty()) {
+                    movieFilteredDatas = movieDatas;
+                } else {
+                    List<MovieData> filteredList = new ArrayList<>();
+                    for (MovieData row : movieDatas) {
+
+                        // name match condition. this might differ depending on your requirement
+                        // here we are looking for name or phone number match
+                        if (row.getTitle().toLowerCase().contains(charString.toLowerCase())) {
+                            filteredList.add(row);
+                        }
+                    }
+
+                    movieFilteredDatas = filteredList;
+                }
+
+                FilterResults filterResults = new FilterResults();
+                filterResults.values = movieFilteredDatas;
+                return filterResults;
+            }
+
+            @Override
+            protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
+                movieFilteredDatas = (ArrayList<MovieData>) filterResults.values;
+                notifyDataSetChanged();
+            }
+        };
+    }
+
     public MovieData getItem(int position) {
-        return movieDatas.get(position);
+        return movieFilteredDatas.get(position);
     }
 
     @Override
@@ -80,13 +121,13 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.Movi
 
     @Override
     public void onBindViewHolder(MovieViewHolder holder, int position) {
-        final MovieData movieData = movieDatas.get(position);
+        final MovieData movieData = movieFilteredDatas.get(position);
         holder.bind(movieData);
     }
 
     @Override
     public int getItemCount() {
-        return movieDatas.size();
+        return movieFilteredDatas.size();
     }
 
     public void setOnMovieItemSelectedListener(OnMovieItemSelectedListener onMovieItemSelectedListener) {

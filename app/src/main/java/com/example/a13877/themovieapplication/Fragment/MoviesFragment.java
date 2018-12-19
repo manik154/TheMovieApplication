@@ -1,6 +1,7 @@
 package com.example.a13877.themovieapplication.Fragment;
 
-import android.app.ProgressDialog;
+import android.app.SearchManager;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
@@ -12,6 +13,7 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.content.res.AppCompatResources;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -26,16 +28,12 @@ import com.example.a13877.themovieapplication.Activity.MovieDetailActivity;
 import com.example.a13877.themovieapplication.Adapter.MovieListAdapter;
 import com.example.a13877.themovieapplication.Model.Movie;
 import com.example.a13877.themovieapplication.Model.MovieData;
-import com.example.a13877.themovieapplication.Model.MovieDetails;
 import com.example.a13877.themovieapplication.R;
 import com.example.a13877.themovieapplication.api.ApiService;
-import com.example.a13877.themovieapplication.util.Constant;
 import com.example.a13877.themovieapplication.util.EndlessRecyclerOnScrollListener;
-import com.example.a13877.themovieapplication.util.GridMarginDecoration;
 import com.leinardi.android.speeddial.FabWithLabelView;
 import com.leinardi.android.speeddial.SpeedDialActionItem;
 import com.leinardi.android.speeddial.SpeedDialView;
-import com.squareup.picasso.Picasso;
 
 import java.net.SocketTimeoutException;
 
@@ -49,14 +47,15 @@ public class MoviesFragment extends Fragment implements MovieListAdapter.OnMovie
     private RecyclerView recyclerViewMovieList;
     private SwipeRefreshLayout swipeRefreshLayout;
     private MovieListAdapter movieListAdapter;
-
+    private boolean isSearched = false;
     private GridLayoutManager gridLayoutManager;
     private int page = 1;
     private int limit = 20;
+    private String query2 = "";
     int count = 0;
     private ApiService apiService;
     public MovieData movieData;
-
+    private SearchView searchView;
 
     private EndlessRecyclerOnScrollListener endlessRecyclerOnScrollListener;
 
@@ -84,9 +83,8 @@ public class MoviesFragment extends Fragment implements MovieListAdapter.OnMovie
         movieListAdapter = new MovieListAdapter(getContext());
 
 
-
         recyclerViewMovieList.setLayoutManager(gridLayoutManager);
-      //  recyclerViewMovieList.addItemDecoration(new GridMarginDecoration(getContext(), 1, 1, 1, 1));
+        //  recyclerViewMovieList.addItemDecoration(new GridMarginDecoration(getContext(), 1, 1, 1, 1));
         recyclerViewMovieList.setHasFixedSize(true);
 
         movieListAdapter.setOnMovieItemSelectedListener(this);
@@ -94,11 +92,13 @@ public class MoviesFragment extends Fragment implements MovieListAdapter.OnMovie
         recyclerViewMovieList.setAdapter(movieListAdapter);
         removeScroll();
         addScroll();
+        Log.v("result", "1");
         swipeRefreshLayout.setColorSchemeResources(R.color.colorPrimary);
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
                 refresh();
+                Log.v("result", "12");
             }
         });
 
@@ -111,11 +111,14 @@ public class MoviesFragment extends Fragment implements MovieListAdapter.OnMovie
     }
 
     public void refresh() {
+        Log.v("result", "3");
+
         if (movieListAdapter != null) {
             movieListAdapter.clear();
         }
         page = 1;
         limit = 20;
+
         removeScroll();
         addScroll();
         loadData();
@@ -123,11 +126,19 @@ public class MoviesFragment extends Fragment implements MovieListAdapter.OnMovie
     }
 
     private void addScroll() {
+
         endlessRecyclerOnScrollListener = new EndlessRecyclerOnScrollListener(gridLayoutManager, page, limit) {
+
             @Override
             public void onLoadMore(int next) {
+
                 page = next;
-                loadData();
+                if (isSearched) {
+                    isSearched = false;
+                } else {
+                    loadData();
+                }
+
             }
         };
 
@@ -135,6 +146,7 @@ public class MoviesFragment extends Fragment implements MovieListAdapter.OnMovie
     }
 
     private void removeScroll() {
+        Log.v("result", "6");
         recyclerViewMovieList.removeOnScrollListener(endlessRecyclerOnScrollListener);
     }
 
@@ -155,7 +167,6 @@ public class MoviesFragment extends Fragment implements MovieListAdapter.OnMovie
                 public void onResponse(Call call, Response response) {
 
                     Movie movie = (Movie) response.body();
-                    Log.v("result", "" + response.body());
                     if (movie != null) {
                         if (movieListAdapter != null) {
                             movieListAdapter.addAll(movie.getResults());
@@ -315,7 +326,7 @@ public class MoviesFragment extends Fragment implements MovieListAdapter.OnMovie
 
                         case R.id.fab_upcoming_movie:
                             count = 2;
-                            getActivity().setTitle("Movies" + " (" + "Upcoming Movies" + ")");
+                            getActivity().setTitle("Movies" + " (" + "Upcoming" + ")");
                             refresh();
                             Toast.makeText(getActivity(), "2", Toast.LENGTH_SHORT).show();
                             return false; // true to keep the Speed Dial open
@@ -340,6 +351,45 @@ public class MoviesFragment extends Fragment implements MovieListAdapter.OnMovie
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.menu_overflow, menu);
         super.onCreateOptionsMenu(menu, inflater);
+
+        // Associate searchable configuration with the SearchView
+        SearchManager searchManager = (SearchManager) getActivity().getSystemService(Context.SEARCH_SERVICE);
+        searchView = (SearchView) menu.findItem(R.id.search)
+                .getActionView();
+        searchView.setSearchableInfo(searchManager
+                .getSearchableInfo(getActivity().getComponentName()));
+        searchView.setMaxWidth(Integer.MAX_VALUE);
+
+        // listening to search query text change
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                isSearched = true;
+
+                // filter recycler view when query submitted
+                movieListAdapter.getFilter().filter(query);
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String query) {
+                isSearched = true;
+
+
+                // filter recycler view when text is changed
+                movieListAdapter.getFilter().filter(query);
+                return false;
+            }
+        });
+        searchView.setOnCloseListener(new SearchView.OnCloseListener() {
+            @Override
+            public boolean onClose() {
+                isSearched = false;
+                refresh();
+                return false;
+            }
+        });
+
     }
 
     @Override
@@ -353,7 +403,6 @@ public class MoviesFragment extends Fragment implements MovieListAdapter.OnMovie
                 refresh();
 
                 break;
-
             case R.id.AboutApplication:
                 Intent intent = new Intent(getActivity(), AboutApplication.class);
                 startActivity(intent);
@@ -364,15 +413,13 @@ public class MoviesFragment extends Fragment implements MovieListAdapter.OnMovie
     }
 
 
-
     @Override
     public void onItemClick(View v, int position) {
 
-        movieData=movieListAdapter.getItem(position);
+        movieData = movieListAdapter.getItem(position);
 
         Intent intent = new Intent(getActivity(), MovieDetailActivity.class);
-
-        intent.putExtra("key",movieData.getId());
+        intent.putExtra("key", movieData.getId());
         startActivity(intent);
     }
 }

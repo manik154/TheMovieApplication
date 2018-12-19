@@ -7,6 +7,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.graphics.Palette;
@@ -24,8 +25,11 @@ import android.widget.Toast;
 
 import com.example.a13877.themovieapplication.Adapter.GetSeasonListAdapter;
 import com.example.a13877.themovieapplication.Adapter.ReviewListAdapter;
+import com.example.a13877.themovieapplication.Adapter.TvListAdapter;
+import com.example.a13877.themovieapplication.Model.MovieDetails;
 import com.example.a13877.themovieapplication.Model.Review;
 import com.example.a13877.themovieapplication.Model.TvSeason;
+import com.example.a13877.themovieapplication.Model.TvSeasonList;
 import com.example.a13877.themovieapplication.Model.TvShow;
 import com.example.a13877.themovieapplication.Model.TvShowGenre;
 import com.example.a13877.themovieapplication.R;
@@ -40,7 +44,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class TvDetailActivity extends AppCompatActivity {
+public class TvDetailActivity extends AppCompatActivity implements GetSeasonListAdapter.OnSeasonItemSelectedListener {
 
 
     private ApiService apiService;
@@ -65,6 +69,11 @@ public class TvDetailActivity extends AppCompatActivity {
     private Toolbar toolbar;
     private ProgressDialog progressDialog;
     private MenuItem item;
+    private  TvSeason tvSeason;
+    private  TvSeasonList tvSeasonList;
+
+
+    private CollapsingToolbarLayout collapsingToolbarLayout;
 
 
     @Override
@@ -73,15 +82,18 @@ public class TvDetailActivity extends AppCompatActivity {
         setContentView(R.layout.layout_detail_televieion_shows);
 
         toolbar = findViewById(R.id.toolbar);
-
-        toolbar.setTitle("");
         setSupportActionBar(toolbar);
-getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        collapsingToolbarLayout = findViewById(R.id.collapsing_toolbar);
         apiService = new ApiService();
         recyclerView = findViewById(R.id.recyclerViewReviewList);
         recyclerViewSeasonList = findViewById(R.id.recyclerSeasonList);
         appBarLayout = findViewById(R.id.app_bar_layout);
+
         getSeasonListAdapter = new GetSeasonListAdapter(getApplicationContext());
+        getSeasonListAdapter.setOnSeasonItemSelectedListener(this);
+
         image = findViewById(R.id.image);
         name = findViewById(R.id.titleShow);
         runtime = findViewById(R.id.showruntime);
@@ -97,6 +109,26 @@ getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         progressDialog.show();
         progressDialog.setCancelable(false);
+
+
+        appBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
+            boolean isShow = true;
+            int scrollRange = -1;
+
+            @Override
+            public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
+                if (scrollRange == -1) {
+                    scrollRange = appBarLayout.getTotalScrollRange();
+                }
+                if (scrollRange + verticalOffset == 0) {
+                    collapsingToolbarLayout.setTitle(tvShow.getName());
+                    isShow = true;
+                } else if (isShow) {
+                    collapsingToolbarLayout.setTitle(" ");//carefull there should a space between double quote otherwise it wont work
+                    isShow = false;
+                }
+            }
+        });
 
         appBarLayout.addOnOffsetChangedListener(new AppBarStateChangeListener() {
             @Override
@@ -134,12 +166,18 @@ getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         });
     }
 
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
+    }
+
     private void loadSeasonListContent(int id) {
         apiService.getTvSeasonContent(id, new Callback() {
 
             @Override
             public void onResponse(Call call, Response response) {
-                TvSeason tvSeason = (TvSeason) response.body();
+                 tvSeason = (TvSeason) response.body();
 
                 if (tvSeason != null) {
                     recyclerViewSeasonList.setLayoutManager(new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.HORIZONTAL, false));
@@ -201,8 +239,7 @@ getSupportActionBar().setDisplayHomeAsUpEnabled(true);
                                 }
 
                                 @Override
-                                public void onBitmapFailed(Drawable errorDrawable)
-                                {
+                                public void onBitmapFailed(Drawable errorDrawable) {
 
                                 }
 
@@ -313,5 +350,19 @@ getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             startActivity(intent);
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onItemClick(View v, int position)
+    {
+tvSeasonList=getSeasonListAdapter.getItem(position);
+
+        Intent intent=new Intent(TvDetailActivity.this,TvSeasonDetails.class);
+        intent.putExtra("Id",tvSeason.getId());
+        intent.putExtra("name",tvSeason.getName());
+        intent.putExtra("position",position);
+        intent.putExtra("totalEpisodes",tvSeasonList.getEpisode_count());
+
+        startActivity(intent);
     }
 }

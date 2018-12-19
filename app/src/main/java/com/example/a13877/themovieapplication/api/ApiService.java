@@ -104,6 +104,11 @@ public class ApiService {
     public void getTvSeasonContent(int tvId,Callback callback) {
         apiInterface.tvDetail2(tvId).enqueue(callback);
     }
+
+    public void getseasonDetail(int tvId,int season_number,Callback callback) {
+        apiInterface.seasonDetail(tvId,season_number).enqueue(callback);
+    }
+
     public void getSimilarTvShows(int tvId,Callback callback) {
         apiInterface.similarTvShows(tvId).enqueue(callback);
     }
