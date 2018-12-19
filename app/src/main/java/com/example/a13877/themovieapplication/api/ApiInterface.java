@@ -3,12 +3,10 @@ package com.example.a13877.themovieapplication.api;
 import com.example.a13877.themovieapplication.Model.GetSimilar;
 import com.example.a13877.themovieapplication.Model.Movie;
 import com.example.a13877.themovieapplication.Model.MovieDetails;
-import com.example.a13877.themovieapplication.Model.MovieImages;
 import com.example.a13877.themovieapplication.Model.Review;
 import com.example.a13877.themovieapplication.Model.Season;
 import com.example.a13877.themovieapplication.Model.TvSeason;
 import com.example.a13877.themovieapplication.Model.TvShow;
-import com.example.a13877.themovieapplication.Model.TvShowGenre;
 import com.example.a13877.themovieapplication.Model.VideoTrailers;
 import com.example.a13877.themovieapplication.util.Constant;
 import retrofit2.Call;
@@ -73,9 +71,6 @@ public interface ApiInterface {
     @GET(Constant.MOVIE_PATH+ "/{movie_id}"+Constant.VIDEOS)
     Call<VideoTrailers>getVideoTrailers(@Path("movie_id")int movieId);
 
-    //https://api.themoviedb.org/3/movie/{movie_id}/images?api_key=<<api_key>>&language=en-US
-    @GET(Constant.MOVIE_PATH+"/{movie_id}"+"/images")
-    Call<MovieImages>getMovieImages(@Path("movie_id") int movieId);
 
     //https://api.themoviedb.org/3/genre/movie/list?api_key=95ffbd804001d42bb7eb88c69bf5a9cd&language=en-US
     @GET(Constant.GENRE_PATH+"/list")

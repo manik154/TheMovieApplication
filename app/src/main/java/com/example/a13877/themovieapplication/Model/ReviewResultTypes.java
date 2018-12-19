@@ -6,6 +6,7 @@ public class ReviewResultTypes
     private String content;
     private String url;
 
+
     public String getUrl() {
         return url;
     }

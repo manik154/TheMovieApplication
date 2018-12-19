@@ -2,7 +2,9 @@ package com.example.a13877.themovieapplication.Model;
 
 import com.google.gson.annotations.SerializedName;
 
-public class Review extends ReviewResults<ReviewResultTypes> {
+import java.util.List;
+
+public class Review {
     @SerializedName("id")
     private int id;
     @SerializedName("page")
@@ -11,6 +13,18 @@ public class Review extends ReviewResults<ReviewResultTypes> {
     private int totalpages;
     @SerializedName("total_results")
     private int totalresults;
+
+
+    @SerializedName("results")
+    private List<ReviewResultTypes> results;
+
+    public List<ReviewResultTypes> getResults() {
+        return results;
+    }
+
+    public void setResults(List<ReviewResultTypes> results) {
+        this.results = results;
+    }
 
     public int getId() {
         return id;

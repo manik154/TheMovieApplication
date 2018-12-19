@@ -31,7 +31,6 @@ import com.example.a13877.themovieapplication.Model.Review;
 import com.example.a13877.themovieapplication.Model.TvSeason;
 import com.example.a13877.themovieapplication.Model.TvSeasonList;
 import com.example.a13877.themovieapplication.Model.TvShow;
-import com.example.a13877.themovieapplication.Model.TvShowGenre;
 import com.example.a13877.themovieapplication.R;
 import com.example.a13877.themovieapplication.api.ApiService;
 import com.example.a13877.themovieapplication.util.AppBarStateChangeListener;

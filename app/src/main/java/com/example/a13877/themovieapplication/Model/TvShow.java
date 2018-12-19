@@ -2,7 +2,7 @@ package com.example.a13877.themovieapplication.Model;
 
 import java.util.List;
 
-public class TvShow extends TvShowGenre<TvGenreTypes>
+public class TvShow
 {
     private String name;
     private String homepage;
@@ -12,6 +12,15 @@ public class TvShow extends TvShowGenre<TvGenreTypes>
     private double vote_average;
     private String poster_path;
     private int id;
+
+    private List<TvGenreTypes> genres;
+    public List<TvGenreTypes> getGenres() {
+        return genres;
+    }
+
+    public void setGenres(List<TvGenreTypes> genres) {
+        this.genres = genres;
+    }
     private List<Integer> episode_run_time;
 
     public List<Integer> getRuntime() {

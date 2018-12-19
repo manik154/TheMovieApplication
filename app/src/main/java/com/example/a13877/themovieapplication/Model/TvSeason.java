@@ -2,8 +2,7 @@ package com.example.a13877.themovieapplication.Model;
 
 import java.util.List;
 
-public class TvSeason extends TvSeason2<TvSeasonList>
-{
+public class TvSeason {
     private String name;
     private String homepage;
     private int number_of_episodes;
@@ -13,6 +12,16 @@ public class TvSeason extends TvSeason2<TvSeasonList>
     private String poster_path;
     private int id;
     private List<Integer> episode_run_time;
+
+    private List<TvSeasonList> seasons;
+
+    public List<TvSeasonList> getSeasons() {
+        return seasons;
+    }
+
+    public void setSeasons(List<TvSeasonList> seasons) {
+        this.seasons = seasons;
+    }
 
     public List<Integer> getRuntime() {
         return episode_run_time;

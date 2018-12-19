@@ -28,7 +28,6 @@ import com.example.a13877.themovieapplication.Model.MovieData;
 import com.example.a13877.themovieapplication.R;
 import com.example.a13877.themovieapplication.api.ApiService;
 import com.example.a13877.themovieapplication.util.EndlessRecyclerOnScrollListener;
-import com.example.a13877.themovieapplication.util.GridMarginDecoration;
 import com.leinardi.android.speeddial.FabWithLabelView;
 import com.leinardi.android.speeddial.SpeedDialActionItem;
 import com.leinardi.android.speeddial.SpeedDialView;

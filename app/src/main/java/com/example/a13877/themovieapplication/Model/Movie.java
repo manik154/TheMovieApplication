@@ -2,13 +2,36 @@ package com.example.a13877.themovieapplication.Model;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.util.List;
 
-public class Movie extends BaseModel<MovieData> {
+
+public class Movie {
 
     @SerializedName("total_results")
     private int totalResult;
     @SerializedName("total_pages")
     private int totalPages;
+
+    @SerializedName("page")
+    private int page;
+    @SerializedName("results")
+    private List<MovieData> results;
+
+    public int getPage() {
+        return page;
+    }
+
+    public void setPage(int page) {
+        this.page = page;
+    }
+
+    public List<MovieData> getResults() {
+        return results;
+    }
+
+    public void setResults(List<MovieData> results) {
+        this.results = results;
+    }
 
     public Movie() {
     }

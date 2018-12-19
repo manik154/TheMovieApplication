@@ -2,9 +2,10 @@ package com.example.a13877.themovieapplication.Model;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.util.List;
 
-public class GetSimilar extends GetSimilarMoviesResult<GetSimilarmovies>
-{
+
+public class GetSimilar {
 
     @SerializedName("page")
     private int page;
@@ -12,6 +13,16 @@ public class GetSimilar extends GetSimilarMoviesResult<GetSimilarmovies>
     private int totalpages;
     @SerializedName("total_results")
     private int totalresults;
+    @SerializedName("results")
+    private List<GetSimilarmovies> results;
+
+    public List<GetSimilarmovies> getResults() {
+        return results;
+    }
+
+    public void setResults(List<GetSimilarmovies> results) {
+        this.results = results;
+    }
 
     public int getPage() {
         return page;
