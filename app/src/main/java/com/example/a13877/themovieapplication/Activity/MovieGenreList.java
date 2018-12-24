@@ -25,7 +25,7 @@ import retrofit2.Response;
 
 public class MovieGenreList extends AppCompatActivity {
     private ApiService apiService;
-private Toolbar toolbar;
+    private Toolbar toolbar;
     private RecyclerView recyclerView;
     private GenreListAdapter genreListAdapter;
 
@@ -34,24 +34,23 @@ private Toolbar toolbar;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.set_movies_genre_list);
         apiService = new ApiService();
-        toolbar=findViewById(R.id.toolbar);
+        toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-
-        Boolean value=getIntent().getBooleanExtra("isMovie",false);
+        Boolean value = getIntent().getBooleanExtra("isMovie", false);
         recyclerView = findViewById(R.id.recyclerViewGenreList);
         genreListAdapter = new GenreListAdapter(getApplicationContext());
-       if(value)
-       {
-           toolbar.setTitle("Movie Genres");
-           loadMovieGenre();
-       }
-        else
-       {
-           toolbar.setTitle("TvShow Genres");
-           loadTvGenre();
-       }
+        if (value) {
+            getSupportActionBar().setTitle("Movie Genres");
+            loadMovieGenre();
+        } else {
+            getSupportActionBar().setTitle("TvShow Genres");
+            loadTvGenre();
+        }
         setSupportActionBar(toolbar);
     }
+
     private void loadTvGenre() {
         apiService.getTvGenreList(new Callback() {
             @Override
@@ -83,6 +82,13 @@ private Toolbar toolbar;
             }
         });
     }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
+    }
+
 
     private void loadMovieGenre() {
         apiService.getMovieGenreList(new Callback() {

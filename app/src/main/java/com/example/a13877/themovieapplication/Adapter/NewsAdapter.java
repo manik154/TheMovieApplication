@@ -47,11 +47,11 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder
     }
 
 
-/*
-    public void remove(TvGenreTypes item) {
-        int position = tvGenreTypes.indexOf(item);
+
+    public void remove(NewsList item) {
+        int position = newsLists.indexOf(item);
         if (position > -1) {
-            tvGenreTypes.remove(position);
+            newsLists.remove(position);
             notifyItemRemoved(position);
         }
     }
@@ -61,12 +61,12 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder
             remove(getItem(0));
         }
     }
-*/
 
-    /* public TvGenreTypes getItem(int position) {
-         return tvGenreTypes.get(position);
+
+    public NewsList getItem(int position) {
+         return newsLists.get(position);
      }
- */
+
     @Override
     public NewsViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.usernews_fragment, parent, false);
