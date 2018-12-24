@@ -1,5 +1,7 @@
 package com.example.a13877.themovieapplication.api;
 
+import android.util.Log;
+
 import com.example.a13877.themovieapplication.util.Constant;
 
 import java.io.IOException;
@@ -51,7 +53,6 @@ public class ApiService {
                         .addQueryParameter("api_key", Constant.API_KEY)
                         .addQueryParameter("language", Constant.LANG_EN)
                         .build();
-
                 request = request.newBuilder().url(url).build();
                 return chain.proceed(request);
             }

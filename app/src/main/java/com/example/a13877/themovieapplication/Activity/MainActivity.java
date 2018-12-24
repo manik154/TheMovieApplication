@@ -17,6 +17,7 @@ import android.view.MenuItem;
 
 import com.example.a13877.themovieapplication.Fragment.GenresFragment;
 import com.example.a13877.themovieapplication.Fragment.MoviesFragment;
+import com.example.a13877.themovieapplication.Fragment.NewsFragment;
 import com.example.a13877.themovieapplication.R;
 import com.example.a13877.themovieapplication.Fragment.TvSeriesFragment;
 
@@ -83,6 +84,9 @@ public class MainActivity extends AppCompatActivity
                 break;
             case R.id.nav_menu3:
                 fragment = new GenresFragment();
+                break;
+            case R.id.nav_menu4:
+                fragment = new NewsFragment();
                 break;
         }
 

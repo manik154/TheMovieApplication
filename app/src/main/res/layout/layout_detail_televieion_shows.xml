@@ -161,7 +161,6 @@
                     android:layout_marginLeft="5dp"
                     android:fontFamily="@font/lato_bold_italic"
                     android:text="HomePage"
-
                     android:textSize="18sp" />
 
                 <TextView

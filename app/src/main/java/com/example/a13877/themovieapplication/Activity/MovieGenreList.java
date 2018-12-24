@@ -58,7 +58,6 @@ private Toolbar toolbar;
             public void onResponse(Call call, Response response) {
 
                 TvShow tvShowGenre = (TvShow) response.body();
-                Log.v("result", "" + response.body());
                 if (tvShowGenre != null) {
 
                     if (genreListAdapter != null) {
