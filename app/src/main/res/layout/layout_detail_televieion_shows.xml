@@ -29,6 +29,7 @@
                 android:layout_height="?attr/actionBarSize"
                 app:layout_collapseMode="pin"
                 app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+
             <ImageView
                 android:id="@+id/posterPath"
                 android:layout_width="match_parent"
@@ -43,9 +44,9 @@
 
     <android.support.v4.widget.NestedScrollView
         android:id="@+id/scroll"
-        android:layout_marginTop="1dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="1dp"
         android:clipToPadding="false"
 
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
@@ -71,9 +72,15 @@
 
                     <ImageView
                         android:id="@+id/image"
-                        android:layout_marginTop="2dp"
                         android:layout_width="150dp"
-                        android:layout_height="200dp" />
+                        android:layout_height="200dp"
+                        android:layout_marginStart="3dp"
+                        android:layout_marginLeft="3dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginEnd="5dp"
+                        android:layout_marginRight="5dp"
+                        android:layout_marginBottom="0.2dp"
+                        android:scaleType="centerCrop" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -192,10 +199,10 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:divider="@null"
-                    android:scrollbars="horizontal"
-                    android:orientation="horizontal"
                     android:fontFamily="@font/lato_italic"
-                    android:minHeight="100dp" />
+                    android:minHeight="100dp"
+                    android:orientation="horizontal"
+                    android:scrollbars="horizontal" />
 
                 <include layout="@layout/seperator_layout"></include>
 

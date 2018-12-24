@@ -61,17 +61,21 @@
 
                     <ImageView
                         android:id="@+id/image"
-                        android:transitionName="transitionimage"
                         android:layout_width="150dp"
-                        android:layout_marginTop="2dp"
-                        android:layout_height="200dp"/>
+                        android:layout_height="200dp"
+                        android:layout_marginStart="3dp"
+                        android:layout_marginLeft="3dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginEnd="5dp"
+                        android:layout_marginRight="5dp"
+                        android:layout_marginBottom="0.2dp"
+                        android:scaleType="centerCrop" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical"
                         android:layout_marginStart="10dp"
-                        >
+                        android:orientation="vertical">
 
                         <TextView
                             android:id="@+id/titleFilm"
@@ -90,7 +94,6 @@
                             android:textSize="14sp" />
 
 
-
                         <TextView
                             android:id="@+id/Movieruntime"
                             android:layout_width="wrap_content"
@@ -102,106 +105,107 @@
                         <TextView
                             android:id="@+id/voteAverage"
                             android:layout_width="wrap_content"
-                            android:layout_marginTop="5dp"
                             android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
                             android:fontFamily="@font/lato_italic"
                             android:textSize="14sp" />
 
                         <TextView
                             android:id="@+id/tagline"
                             android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
                             android:layout_marginTop="20dp"
                             android:fontFamily="@font/lato_italic"
-                            android:layout_height="wrap_content"
                             android:textSize="14sp" />
                     </LinearLayout>
 
                 </LinearLayout>
+
                 <include layout="@layout/new_separator"></include>
 
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="FilmAbout"
                     android:layout_marginStart="5dp"
                     android:fontFamily="@font/lato_bold_italic"
+                    android:text="FilmAbout"
                     android:textSize="18sp" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
                     android:layout_marginTop="10dp"
                     android:layout_marginEnd="5dp"
                     android:minHeight="100dp"
-                    android:layout_marginStart="5dp"
                     android:orientation="vertical">
 
                     <TextView
                         android:id="@+id/filmAbout"
-                        android:fontFamily="@font/lato_italic"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/lato_italic" />
                 </LinearLayout>
-
-                <include layout="@layout/seperator_layout"> </include>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="HomePage"
-                    android:layout_marginStart="5dp"
-                    android:fontFamily="@font/lato_bold_italic"
-                    android:textSize="18sp" />
-
-                <TextView
-                    android:id="@+id/homepage"
-                    android:layout_marginStart="5dp"
-                    android:layout_marginTop="10dp"
-                    android:autoLink="web"
-                    android:focusable="true"
-                    android:clickable="true"
-                    android:fontFamily="@font/lato_italic"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
 
                 <include layout="@layout/seperator_layout"></include>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Trailers"
                     android:layout_marginStart="5dp"
                     android:fontFamily="@font/lato_bold_italic"
+                    android:text="HomePage"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/homepage"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginTop="10dp"
+                    android:autoLink="web"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:fontFamily="@font/lato_italic" />
+
+                <include layout="@layout/seperator_layout"></include>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:fontFamily="@font/lato_bold_italic"
+                    android:text="Trailers"
                     android:textSize="18sp" />
 
 
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/recyclerViewTrailerList"
                     android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:minHeight="100dp"
                     android:fontFamily="@font/lato_italic"
-                    android:layout_height="wrap_content" />
+                    android:minHeight="100dp" />
 
                 <include layout="@layout/seperator_layout"></include>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Reviews"
                     android:layout_marginStart="5dp"
                     android:fontFamily="@font/lato_bold_italic"
+                    android:text="Reviews"
                     android:textSize="18sp" />
 
 
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/recyclerViewReviewList"
                     android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:minHeight="100dp"
                     android:fontFamily="@font/lato_italic"
-                    android:layout_height="wrap_content" />
+                    android:minHeight="100dp" />
 
             </LinearLayout>
         </android.support.v7.widget.CardView>
