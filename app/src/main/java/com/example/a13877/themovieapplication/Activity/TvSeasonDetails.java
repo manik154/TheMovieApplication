@@ -17,6 +17,7 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.example.a13877.themovieapplication.Adapter.GetSeasonDetailAdapter;
 import com.example.a13877.themovieapplication.Adapter.GetSeasonListAdapter;
+import com.example.a13877.themovieapplication.Model.EpisodeDetails;
 import com.example.a13877.themovieapplication.Model.Season;
 import com.example.a13877.themovieapplication.R;
 import com.example.a13877.themovieapplication.api.ApiService;
@@ -27,7 +28,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class TvSeasonDetails extends AppCompatActivity implements GetSeasonDetailAdapter.OnSeasonListDetailListener {
+public class TvSeasonDetails extends AppCompatActivity {
     private TextView titleText;
     private ImageView imageView;
     private TextView airDate;
@@ -71,7 +72,6 @@ public class TvSeasonDetails extends AppCompatActivity implements GetSeasonDetai
         recyclerViewSeasonDetails.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
         recyclerViewSeasonDetails.setHasFixedSize(true);
 
-        getSeasonDetailAdapter.setOnSeasonListDetailListener(this);
 
         id = getIntent().getExtras().getInt("Id");
         position = getIntent().getExtras().getInt("position");
@@ -134,18 +134,4 @@ public class TvSeasonDetails extends AppCompatActivity implements GetSeasonDetai
         return true;
     }
 
-    @Override
-    public void onItemClick(View v, int position) {
-/*
-        if (count == 0) {
-            relativeLayout.setVisibility(View.VISIBLE);
-            count++;
-        } else {
-            relativeLayout.setVisibility(View.GONE);
-            count = 0;
-        }
-*/
-       // relativeLayout.setVisibility(View.VISIBLE);
-
-    }
 }

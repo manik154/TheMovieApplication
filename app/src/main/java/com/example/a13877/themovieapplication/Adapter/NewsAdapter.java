@@ -3,6 +3,8 @@ package com.example.a13877.themovieapplication.Adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.text.Html;
+import android.text.Spanned;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -47,7 +49,6 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder
     }
 
 
-
     public void remove(NewsList item) {
         int position = newsLists.indexOf(item);
         if (position > -1) {
@@ -64,8 +65,8 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder
 
 
     public NewsList getItem(int position) {
-         return newsLists.get(position);
-     }
+        return newsLists.get(position);
+    }
 
     @Override
     public NewsViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -82,7 +83,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder
         holder.linear.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.v("hope",""+position);
+                Log.v("hope", "" + position);
                 onMovieItemSelectedListener.onItemClick(newsLists.get(position));
             }
         });
@@ -118,7 +119,10 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder
             Glide.with(context)
                     .load(newsList.getUrlToImage())
                     .into(imageView);
-            title.setText(newsList.getTitle());
+
+            Spanned htmlAsSpanned = Html.fromHtml(newsList.getTitle());
+            title.setText(htmlAsSpanned);
+
             description.setText(newsList.getContent());
             postedBy.setText("Posted By:- " + newsList.getAuthor());
             sourcename.setText("Source:- " + newsList.getSource().getName());

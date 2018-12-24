@@ -7,7 +7,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
+
 import com.example.a13877.themovieapplication.Model.EpisodeDetails;
 import com.example.a13877.themovieapplication.Model.MovieData;
 import com.example.a13877.themovieapplication.R;
@@ -15,13 +17,11 @@ import com.example.a13877.themovieapplication.R;
 import java.util.ArrayList;
 import java.util.List;
 
-
 public class GetSeasonDetailAdapter extends RecyclerView.Adapter<GetSeasonDetailAdapter.SeasonViewHolder> {
 
     private List<EpisodeDetails> episodeDetails;
     private Context context;
-    private OnSeasonListDetailListener onSeasonListDetailListener;
-
+    private int count = 0;
 
     public GetSeasonDetailAdapter(Context context) {
         this.context = context;
@@ -55,34 +55,33 @@ public class GetSeasonDetailAdapter extends RecyclerView.Adapter<GetSeasonDetail
     public SeasonViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.user_detail_season_list, parent, false);
         final SeasonViewHolder seasonViewHolder = new SeasonViewHolder(view);
-        seasonViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                int adapterPos = seasonViewHolder.getAdapterPosition();
-                if (adapterPos != RecyclerView.NO_POSITION) {
-                    if (onSeasonListDetailListener != null) {
-                        onSeasonListDetailListener.onItemClick(seasonViewHolder.itemView, adapterPos);
-                    }
-                }
-            }
-        });
         return seasonViewHolder;
     }
 
     @Override
-    public void onBindViewHolder(SeasonViewHolder holder, int position) {
+    public void onBindViewHolder(final SeasonViewHolder holder, final int position) {
         final EpisodeDetails episodeDetails1 = episodeDetails.get(position);
         holder.bind(episodeDetails1);
+        holder.relativeLayout2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if (count == 0) {
+                    holder.imageview.setImageResource(R.drawable.arrow_up);
+                    holder.relativeLayout.setVisibility(View.VISIBLE);
+                    count++;
+                } else {
+                    holder.imageview.setImageResource(R.drawable.arrow_down);
+                    holder.relativeLayout.setVisibility(View.GONE);
+                    count = 0;
+                }
+            }
+        });
     }
 
     @Override
     public int getItemCount() {
         return episodeDetails.size();
-    }
-
-    public void setOnSeasonListDetailListener(OnSeasonListDetailListener onSeasonListDetailListener) {
-        this.onSeasonListDetailListener = onSeasonListDetailListener;
     }
 
 
@@ -93,6 +92,8 @@ public class GetSeasonDetailAdapter extends RecyclerView.Adapter<GetSeasonDetail
         TextView voteaverage;
         TextView airdate;
         ImageView imageview;
+        RelativeLayout relativeLayout;
+        RelativeLayout relativeLayout2;
 
         public SeasonViewHolder(View itemView) {
             super(itemView);
@@ -101,7 +102,9 @@ public class GetSeasonDetailAdapter extends RecyclerView.Adapter<GetSeasonDetail
             overviewdetails = itemView.findViewById(R.id.overviewDetails);
             voteaverage = itemView.findViewById(R.id.voteaverage);
             imageview = itemView.findViewById(R.id.imageview);
-            airdate=itemView.findViewById(R.id.airdate);
+            airdate = itemView.findViewById(R.id.airdate);
+            relativeLayout = itemView.findViewById(R.id.relative2);
+            relativeLayout2=itemView.findViewById(R.id.relative1);
         }
 
         public void bind(EpisodeDetails episodeDetails) {
@@ -109,12 +112,8 @@ public class GetSeasonDetailAdapter extends RecyclerView.Adapter<GetSeasonDetail
             episodename.setText(episodeDetails.getName());
             overviewdetails.setText(episodeDetails.getOverview());
             voteaverage.setText("Average Votes:- " + episodeDetails.getVote_average());
-            airdate.setText("AirDate:- "+episodeDetails.getAir_date());
+            airdate.setText("AirDate:- " + episodeDetails.getAir_date());
         }
-    }
-
-    public interface OnSeasonListDetailListener  {
-        void onItemClick(View v, int position);
     }
 
 
