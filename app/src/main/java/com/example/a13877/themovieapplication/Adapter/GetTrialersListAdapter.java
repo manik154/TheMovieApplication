@@ -11,19 +11,15 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.example.a13877.themovieapplication.Activity.MovieDetailActivity;
-import com.example.a13877.themovieapplication.Model.VideoTrailerContent;
+import com.example.a13877.themovieapplication.Model.VideoTrailers;
 import com.example.a13877.themovieapplication.R;
-import com.example.a13877.themovieapplication.api.ApiService;
-import com.squareup.picasso.Picasso;
-
 import java.util.ArrayList;
 import java.util.List;
 
 
 public class GetTrialersListAdapter extends RecyclerView.Adapter<GetTrialersListAdapter.TrailersViewHolder> {
 
-    private List<VideoTrailerContent> videoTrailerContents;
+    private List<VideoTrailers.VideoTrailerContent> videoTrailerContents;
     private Context context;
     private OnTrailerItemSelectedListener onTrailerItemSelectedListener;
 
@@ -33,18 +29,18 @@ public class GetTrialersListAdapter extends RecyclerView.Adapter<GetTrialersList
         videoTrailerContents = new ArrayList<>();
     }
 
-    private void add(VideoTrailerContent item) {
+    private void add(VideoTrailers.VideoTrailerContent item) {
         videoTrailerContents.add(item);
         notifyItemInserted(videoTrailerContents.size() - 1);
     }
 
-    public void addAll(List<VideoTrailerContent> videoTrailerContents) {
-        for (VideoTrailerContent movieDatas : videoTrailerContents) {
+    public void addAll(List<VideoTrailers.VideoTrailerContent> videoTrailerContents) {
+        for (VideoTrailers.VideoTrailerContent movieDatas : videoTrailerContents) {
             add(movieDatas);
         }
     }
 
-    public void remove(VideoTrailerContent item) {
+    public void remove(VideoTrailers.VideoTrailerContent item) {
         int position = videoTrailerContents.indexOf(item);
         if (position > -1) {
             videoTrailerContents.remove(position);
@@ -58,7 +54,7 @@ public class GetTrialersListAdapter extends RecyclerView.Adapter<GetTrialersList
         }
     }
 
-    public VideoTrailerContent getItem(int position) {
+    public VideoTrailers.VideoTrailerContent getItem(int position) {
         return videoTrailerContents.get(position);
     }
 
@@ -85,7 +81,7 @@ public class GetTrialersListAdapter extends RecyclerView.Adapter<GetTrialersList
 
     @Override
     public void onBindViewHolder(TrailersViewHolder holder, int position) {
-        final VideoTrailerContent videoTrailerContent = videoTrailerContents.get(position);
+        final VideoTrailers.VideoTrailerContent videoTrailerContent = videoTrailerContents.get(position);
         holder.bind(videoTrailerContent);
     }
 
@@ -111,7 +107,7 @@ public class GetTrialersListAdapter extends RecyclerView.Adapter<GetTrialersList
 
         }
 
-        public void bind(VideoTrailerContent videoTrailerContent) {
+        public void bind(VideoTrailers.VideoTrailerContent videoTrailerContent) {
 
             /*Picasso.with(context)
                     .load(R.drawable.moviedb_about)

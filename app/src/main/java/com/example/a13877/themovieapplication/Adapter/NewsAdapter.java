@@ -14,7 +14,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.example.a13877.themovieapplication.Model.NewsList;
+import com.example.a13877.themovieapplication.Model.News;
 import com.example.a13877.themovieapplication.R;
 
 import java.util.ArrayList;
@@ -22,7 +22,7 @@ import java.util.List;
 
 public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder> {
 
-    private List<NewsList> newsLists;
+    private List<News.NewsList> newsLists;
     private Context context;
     private OnMovieItemSelectedListener onMovieItemSelectedListener;
 
@@ -33,13 +33,13 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder
 
     }
 
-    private void add(NewsList item) {
+    private void add(News.NewsList item) {
         newsLists.add(item);
         notifyItemInserted(newsLists.size() - 1);
     }
 
-    public void addAll(List<NewsList> newsLists) {
-        for (NewsList newsList : newsLists) {
+    public void addAll(List<News.NewsList> newsLists) {
+        for (News.NewsList newsList : newsLists) {
             add(newsList);
         }
     }
@@ -49,7 +49,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder
     }
 
 
-    public void remove(NewsList item) {
+    public void remove(News.NewsList item) {
         int position = newsLists.indexOf(item);
         if (position > -1) {
             newsLists.remove(position);
@@ -64,7 +64,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder
     }
 
 
-    public NewsList getItem(int position) {
+    public News.NewsList getItem(int position) {
         return newsLists.get(position);
     }
 
@@ -78,7 +78,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder
 
     @Override
     public void onBindViewHolder(final NewsViewHolder holder, final int position) {
-        final NewsList newsList = newsLists.get(position);
+        final News.NewsList newsList = newsLists.get(position);
         holder.bind(newsList);
         holder.linear.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -115,7 +115,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder
 
         }
 
-        public void bind(NewsList newsList) {
+        public void bind(News.NewsList newsList) {
             Glide.with(context)
                     .load(newsList.getUrlToImage())
                     .into(imageView);
@@ -130,7 +130,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder
     }
 
     public interface OnMovieItemSelectedListener {
-        void onItemClick(NewsList newsList);
+        void onItemClick(News.NewsList newsList);
     }
 
 }

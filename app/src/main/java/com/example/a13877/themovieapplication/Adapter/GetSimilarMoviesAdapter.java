@@ -11,20 +11,16 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.example.a13877.themovieapplication.Model.GetSimilarmovies;
+import com.example.a13877.themovieapplication.Model.GetSimilar;
 import com.example.a13877.themovieapplication.R;
 import com.example.a13877.themovieapplication.api.ApiService;
-import com.squareup.picasso.Picasso;
-
 import java.util.ArrayList;
 import java.util.List;
-
-import retrofit2.Callback;
 
 
 public class GetSimilarMoviesAdapter extends RecyclerView.Adapter<GetSimilarMoviesAdapter.GetSimilarViewHolder> {
 
-    private List<GetSimilarmovies> getSimilarmovies;
+    private List<GetSimilar.GetSimilarmovies> getSimilarmovies;
     private Context context;
     private OnImageClickedListener imageClickedListener;
 
@@ -37,13 +33,13 @@ public class GetSimilarMoviesAdapter extends RecyclerView.Adapter<GetSimilarMovi
         getSimilarmovies = new ArrayList<>();
     }
 
-    private void add(GetSimilarmovies item) {
+    private void add(GetSimilar.GetSimilarmovies item) {
         getSimilarmovies.add(item);
         notifyItemInserted(getSimilarmovies.size() - 1);
     }
 
-    public void addAll(List<GetSimilarmovies> getSimilarmovies) {
-        for (GetSimilarmovies getSimilarmovies1 : getSimilarmovies) {
+    public void addAll(List<GetSimilar.GetSimilarmovies> getSimilarmovies) {
+        for (GetSimilar.GetSimilarmovies getSimilarmovies1 : getSimilarmovies) {
             add(getSimilarmovies1);
         }
     }
@@ -53,7 +49,7 @@ public class GetSimilarMoviesAdapter extends RecyclerView.Adapter<GetSimilarMovi
         }
     }
 
-    public void remove(GetSimilarmovies item) {
+    public void remove(GetSimilar.GetSimilarmovies item) {
         int position = getSimilarmovies.indexOf(item);
         if (position > -1) {
             getSimilarmovies.remove(position);
@@ -61,7 +57,7 @@ public class GetSimilarMoviesAdapter extends RecyclerView.Adapter<GetSimilarMovi
         }
     }
 
-    public GetSimilarmovies getItem(int position) {
+    public GetSimilar.GetSimilarmovies getItem(int position) {
         return getSimilarmovies.get(position);
     }
 
@@ -86,7 +82,7 @@ public class GetSimilarMoviesAdapter extends RecyclerView.Adapter<GetSimilarMovi
 
     @Override
     public void onBindViewHolder(GetSimilarViewHolder holder, int position) {
-        final GetSimilarmovies getSimilarmovies1 = getSimilarmovies.get(position);
+        final GetSimilar.GetSimilarmovies getSimilarmovies1 = getSimilarmovies.get(position);
         holder.bind(getSimilarmovies1);
     }
 
@@ -111,7 +107,7 @@ public class GetSimilarMoviesAdapter extends RecyclerView.Adapter<GetSimilarMovi
 
         }
 
-        public void bind(GetSimilarmovies getSimilarmovies) {
+        public void bind(GetSimilar.GetSimilarmovies getSimilarmovies) {
             voteAverage.setText("Average Rating " + String.valueOf(getSimilarmovies.getVoteAverage()));
             // title.setText(getSimilarmovies.getTitle());
           /*  Picasso.with(context)

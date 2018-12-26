@@ -16,8 +16,6 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.a13877.themovieapplication.Adapter.GetSeasonDetailAdapter;
-import com.example.a13877.themovieapplication.Adapter.GetSeasonListAdapter;
-import com.example.a13877.themovieapplication.Model.EpisodeDetails;
 import com.example.a13877.themovieapplication.Model.Season;
 import com.example.a13877.themovieapplication.R;
 import com.example.a13877.themovieapplication.api.ApiService;

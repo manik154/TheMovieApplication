@@ -9,9 +9,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-
-import com.example.a13877.themovieapplication.Model.EpisodeDetails;
 import com.example.a13877.themovieapplication.Model.MovieData;
+import com.example.a13877.themovieapplication.Model.Season;
 import com.example.a13877.themovieapplication.R;
 
 import java.util.ArrayList;
@@ -19,7 +18,7 @@ import java.util.List;
 
 public class GetSeasonDetailAdapter extends RecyclerView.Adapter<GetSeasonDetailAdapter.SeasonViewHolder> {
 
-    private List<EpisodeDetails> episodeDetails;
+    private List<Season.EpisodeDetails> episodeDetails;
     private Context context;
     private int count = 0;
 
@@ -28,13 +27,13 @@ public class GetSeasonDetailAdapter extends RecyclerView.Adapter<GetSeasonDetail
         episodeDetails = new ArrayList<>();
     }
 
-    private void add(EpisodeDetails item) {
+    private void add(Season.EpisodeDetails item) {
         episodeDetails.add(item);
         notifyItemInserted(episodeDetails.size() - 1);
     }
 
-    public void addAll(List<EpisodeDetails> episodeDetails) {
-        for (EpisodeDetails episodeDetails1 : episodeDetails) {
+    public void addAll(List<Season.EpisodeDetails> episodeDetails) {
+        for (Season.EpisodeDetails episodeDetails1 : episodeDetails) {
             add(episodeDetails1);
         }
     }
@@ -47,7 +46,7 @@ public class GetSeasonDetailAdapter extends RecyclerView.Adapter<GetSeasonDetail
         }
     }
 
-    public EpisodeDetails getItem(int position) {
+    public Season.EpisodeDetails getItem(int position) {
         return episodeDetails.get(position);
     }
 
@@ -60,7 +59,7 @@ public class GetSeasonDetailAdapter extends RecyclerView.Adapter<GetSeasonDetail
 
     @Override
     public void onBindViewHolder(final SeasonViewHolder holder, final int position) {
-        final EpisodeDetails episodeDetails1 = episodeDetails.get(position);
+        final Season.EpisodeDetails episodeDetails1 = episodeDetails.get(position);
         holder.bind(episodeDetails1);
         holder.relativeLayout2.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -107,7 +106,7 @@ public class GetSeasonDetailAdapter extends RecyclerView.Adapter<GetSeasonDetail
             relativeLayout2=itemView.findViewById(R.id.relative1);
         }
 
-        public void bind(EpisodeDetails episodeDetails) {
+        public void bind(Season.EpisodeDetails episodeDetails) {
             episodenumber.setText(String.valueOf(episodeDetails.getEpisode_number()) + ". ");
             episodename.setText(episodeDetails.getName());
             overviewdetails.setText(episodeDetails.getOverview());

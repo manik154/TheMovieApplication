@@ -24,7 +24,7 @@ import android.widget.Toast;
 import com.example.a13877.themovieapplication.Activity.AboutApplication;
 import com.example.a13877.themovieapplication.Adapter.NewsAdapter;
 import com.example.a13877.themovieapplication.Model.News;
-import com.example.a13877.themovieapplication.Model.NewsList;
+
 import com.example.a13877.themovieapplication.R;
 import com.example.a13877.themovieapplication.api.ApiServiceNews;
 
@@ -157,7 +157,7 @@ public class NewsFragment extends Fragment implements NewsAdapter.OnMovieItemSel
     }
 
     @Override
-    public void onItemClick(NewsList newsList) {
+    public void onItemClick(News.NewsList newsList) {
 
         Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(newsList.getUrl()));
         startActivity(browserIntent);

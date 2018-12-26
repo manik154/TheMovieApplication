@@ -14,7 +14,6 @@ import android.widget.Toast;
 
 import com.example.a13877.themovieapplication.Adapter.GetSimilarMoviesAdapter;
 import com.example.a13877.themovieapplication.Model.GetSimilar;
-import com.example.a13877.themovieapplication.Model.GetSimilarmovies;
 import com.example.a13877.themovieapplication.R;
 import com.example.a13877.themovieapplication.api.ApiService;
 import com.example.a13877.themovieapplication.util.EndlessRecyclerOnScrollListener;
@@ -34,7 +33,7 @@ public class SimilarTvShow extends AppCompatActivity implements GetSimilarMovies
     private int limit = 20;
     private GridLayoutManager gridLayoutManager;
     private ApiService apiService;
-    private GetSimilarmovies getSimilarmovies;
+    private GetSimilar.GetSimilarmovies getSimilarmovies;
     private SwipeRefreshLayout swipeRefreshLayout;
     private EndlessRecyclerOnScrollListener endlessRecyclerOnScrollListener;
 

@@ -32,7 +32,6 @@ import com.example.a13877.themovieapplication.Adapter.GetTrialersListAdapter;
 import com.example.a13877.themovieapplication.Adapter.ReviewListAdapter;
 import com.example.a13877.themovieapplication.Model.MovieDetails;
 import com.example.a13877.themovieapplication.Model.Review;
-import com.example.a13877.themovieapplication.Model.VideoTrailerContent;
 import com.example.a13877.themovieapplication.Model.VideoTrailers;
 import com.example.a13877.themovieapplication.R;
 import com.example.a13877.themovieapplication.api.ApiService;
@@ -360,7 +359,7 @@ public class MovieDetailActivity extends AppCompatActivity implements GetTrialer
 
     @Override
     public void onItemClick(View v, int position) {
-        VideoTrailerContent videoTrailerContent;
+        VideoTrailers.VideoTrailerContent videoTrailerContent;
         videoTrailerContent = getTrialersListAdapter.getItem(position);
         String key = videoTrailerContent.getKey();
 

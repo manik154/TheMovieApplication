@@ -10,7 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.a13877.themovieapplication.Model.MovieData;
-import com.example.a13877.themovieapplication.Model.ReviewResultTypes;
+import com.example.a13877.themovieapplication.Model.Review;
 import com.example.a13877.themovieapplication.R;
 
 import java.util.ArrayList;
@@ -19,7 +19,7 @@ import java.util.List;
 
 public class ReviewListAdapter extends RecyclerView.Adapter<ReviewListAdapter.ReviewViewHolder> {
 
-    private List<ReviewResultTypes> reviewResultTypes;
+    private List<Review.ReviewResultTypes> reviewResultTypes;
     private Context context;
 
 
@@ -28,13 +28,13 @@ public class ReviewListAdapter extends RecyclerView.Adapter<ReviewListAdapter.Re
         reviewResultTypes = new ArrayList<>();
     }
 
-    private void add(ReviewResultTypes item) {
+    private void add(Review.ReviewResultTypes item) {
         reviewResultTypes.add(item);
         notifyItemInserted(reviewResultTypes.size() - 1);
     }
 
-    public void addAll(List<ReviewResultTypes> reviewResultTypes) {
-        for (ReviewResultTypes reviewResultTypes1 : reviewResultTypes) {
+    public void addAll(List<Review.ReviewResultTypes> reviewResultTypes) {
+        for (Review.ReviewResultTypes reviewResultTypes1 : reviewResultTypes) {
             add(reviewResultTypes1);
         }
     }
@@ -47,7 +47,7 @@ public class ReviewListAdapter extends RecyclerView.Adapter<ReviewListAdapter.Re
         }
     }
 
-    public ReviewResultTypes getItem(int position) {
+    public Review.ReviewResultTypes getItem(int position) {
         return reviewResultTypes.get(position);
     }
 
@@ -61,7 +61,7 @@ public class ReviewListAdapter extends RecyclerView.Adapter<ReviewListAdapter.Re
 
     @Override
     public void onBindViewHolder(ReviewViewHolder holder, int position) {
-        final ReviewResultTypes reviewResultTypes1 = reviewResultTypes.get(position);
+        final Review.ReviewResultTypes reviewResultTypes1 = reviewResultTypes.get(position);
         holder.bind(reviewResultTypes1);
     }
 
@@ -84,7 +84,7 @@ public class ReviewListAdapter extends RecyclerView.Adapter<ReviewListAdapter.Re
 
         }
 
-        public void bind(ReviewResultTypes reviewResultTypes) {
+        public void bind(Review.ReviewResultTypes reviewResultTypes) {
             author.setText(reviewResultTypes.getAuthor());
             review.setText(reviewResultTypes.getContent());
 
