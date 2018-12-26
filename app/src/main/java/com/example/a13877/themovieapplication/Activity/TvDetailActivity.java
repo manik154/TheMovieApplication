@@ -29,7 +29,7 @@ import com.example.a13877.themovieapplication.Adapter.TvListAdapter;
 import com.example.a13877.themovieapplication.Model.MovieDetails;
 import com.example.a13877.themovieapplication.Model.Review;
 import com.example.a13877.themovieapplication.Model.TvSeason;
-import com.example.a13877.themovieapplication.Model.TvSeasonList;
+
 import com.example.a13877.themovieapplication.Model.TvShow;
 import com.example.a13877.themovieapplication.R;
 import com.example.a13877.themovieapplication.api.ApiService;
@@ -69,7 +69,7 @@ public class TvDetailActivity extends AppCompatActivity implements GetSeasonList
     private ProgressDialog progressDialog;
     private MenuItem item;
     private  TvSeason tvSeason;
-    private  TvSeasonList tvSeasonList;
+    private  TvSeason.TvSeasonList tvSeasonList;
 
 
     private CollapsingToolbarLayout collapsingToolbarLayout;

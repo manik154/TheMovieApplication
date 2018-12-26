@@ -9,7 +9,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.example.a13877.themovieapplication.Model.TvSeasonList;
+
+import com.example.a13877.themovieapplication.Model.TvSeason;
 import com.example.a13877.themovieapplication.R;
 import com.example.a13877.themovieapplication.api.ApiService;
 
@@ -18,7 +19,7 @@ import java.util.List;
 
 public class GetSeasonListAdapter extends RecyclerView.Adapter<GetSeasonListAdapter.SeasonListHolder> {
 
-    private List<TvSeasonList> tvSeasonLists;
+    private List<TvSeason.TvSeasonList> tvSeasonLists;
     private Context context;
     private OnSeasonItemSelectedListener onSeasonItemSelectedListener;
 
@@ -28,18 +29,18 @@ public class GetSeasonListAdapter extends RecyclerView.Adapter<GetSeasonListAdap
         tvSeasonLists = new ArrayList<>();
     }
 
-    private void add(TvSeasonList item) {
+    private void add(TvSeason.TvSeasonList item) {
         tvSeasonLists.add(item);
         notifyItemInserted(tvSeasonLists.size() - 1);
     }
 
-    public void addAll(List<TvSeasonList> tvSeasonLists) {
-        for (TvSeasonList tvSeasonLists2 : tvSeasonLists) {
+    public void addAll(List<TvSeason.TvSeasonList> tvSeasonLists) {
+        for (TvSeason.TvSeasonList tvSeasonLists2 : tvSeasonLists) {
             add(tvSeasonLists2);
         }
     }
 
-    public void remove(TvSeasonList item) {
+    public void remove(TvSeason.TvSeasonList item) {
         int position = tvSeasonLists.indexOf(item);
         if (position > -1) {
             tvSeasonLists.remove(position);
@@ -53,7 +54,7 @@ public class GetSeasonListAdapter extends RecyclerView.Adapter<GetSeasonListAdap
         }
     }
 
-    public TvSeasonList getItem(int position) {
+    public TvSeason.TvSeasonList getItem(int position) {
         return tvSeasonLists.get(position);
     }
 
@@ -79,7 +80,7 @@ public class GetSeasonListAdapter extends RecyclerView.Adapter<GetSeasonListAdap
 
     @Override
     public void onBindViewHolder(SeasonListHolder holder, int position) {
-        final TvSeasonList tvSeasonList = tvSeasonLists.get(position);
+        final TvSeason.TvSeasonList tvSeasonList = tvSeasonLists.get(position);
         holder.bind(tvSeasonList);
     }
 
@@ -106,7 +107,7 @@ public class GetSeasonListAdapter extends RecyclerView.Adapter<GetSeasonListAdap
             totalepisode = itemView.findViewById(R.id.totalEpisode);
         }
 
-        public void bind(TvSeasonList tvSeasonList) {
+        public void bind(TvSeason.TvSeasonList tvSeasonList) {
 
             Glide.with(context)
                     .load(ApiService.IMG_URL + tvSeasonList.getPoster_path())
