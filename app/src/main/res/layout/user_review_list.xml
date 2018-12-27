@@ -11,6 +11,7 @@
         android:layout_height="wrap_content"
         android:minHeight="20dp"
         android:textSize="14sp"
+        android:layout_marginTop="5dp"
         android:textStyle="bold"
         android:fontFamily="@font/lato_italic"
         android:layout_marginLeft="5dp" />
@@ -19,6 +20,7 @@
         android:id="@+id/reviews"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
         android:layout_marginStart="5dp"
         android:minHeight="20dp"
         android:textSize="14sp"
@@ -26,5 +28,4 @@
         android:layout_marginTop="10dp"
         android:layout_marginLeft="5dp" />
 
-    <include layout="@layout/seperator_layout"> </include>
 </LinearLayout>

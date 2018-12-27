@@ -37,7 +37,7 @@
             android:fontFamily="@font/lato_black_italic"
             android:text="@string/movies" />
 
-        <include layout="@layout/seperator_layout">
+        <include layout="@layout/separator_layout">
 
         </include>
 
@@ -53,7 +53,7 @@
             android:gravity="center_vertical"
             android:text="@string/tv_shows" />
 
-        <include layout="@layout/seperator_layout">
+        <include layout="@layout/separator_layout">
 
         </include>
 

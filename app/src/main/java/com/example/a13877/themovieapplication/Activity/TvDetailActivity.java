@@ -11,6 +11,7 @@ import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.graphics.Palette;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -50,6 +51,7 @@ public class TvDetailActivity extends AppCompatActivity implements GetSeasonList
     private ImageView image;
     private FloatingActionButton floatingActionButton;
     private TextView homepage;
+    private LinearLayoutManager linearLayoutManager;
     private TextView name;
     private RecyclerView recyclerView;
     private RecyclerView recyclerViewSeasonList;
@@ -83,7 +85,7 @@ public class TvDetailActivity extends AppCompatActivity implements GetSeasonList
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
+linearLayoutManager=new LinearLayoutManager(getApplicationContext());
         collapsingToolbarLayout = findViewById(R.id.collapsing_toolbar);
         apiService = new ApiService();
         recyclerView = findViewById(R.id.recyclerViewReviewList);
@@ -303,8 +305,9 @@ public class TvDetailActivity extends AppCompatActivity implements GetSeasonList
                     reviewListAdapter = new ReviewListAdapter(getApplicationContext());
                     reviewListAdapter.addAll(review.getResults());
 
-                    recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+                    recyclerView.setLayoutManager(linearLayoutManager);
                     recyclerView.setHasFixedSize(false);
+                    recyclerView.addItemDecoration(new DividerItemDecoration(getApplicationContext(), linearLayoutManager.getOrientation()));
                     progressDialog.dismiss();
                     recyclerView.setAdapter(reviewListAdapter);
 

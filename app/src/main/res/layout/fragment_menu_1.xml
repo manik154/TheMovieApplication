@@ -32,7 +32,7 @@
             android:layout_alignParentRight="true"
             android:layout_alignParentBottom="true"
             app:layout_behavior="@string/speeddial_scrolling_view_snackbar_behavior"
-            app:sdMainFabClosedSrc="@drawable/moviedb_about" />
+            app:sdMainFabClosedSrc="@mipmap/movie_about" />
 
     </RelativeLayout>
 </LinearLayout>

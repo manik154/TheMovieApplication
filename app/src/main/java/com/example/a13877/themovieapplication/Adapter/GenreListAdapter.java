@@ -8,7 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.example.a13877.themovieapplication.Model.TvGenreTypes;
+import com.example.a13877.themovieapplication.Model.TvShow;
 import com.example.a13877.themovieapplication.R;
 
 import java.util.ArrayList;
@@ -17,7 +17,7 @@ import java.util.List;
 
 public class GenreListAdapter extends RecyclerView.Adapter<GenreListAdapter.GenreListViewHolder> {
 
-    private List<TvGenreTypes> tvGenreTypes;
+    private List<TvShow.TvGenreTypes> tvGenreTypes;
     private Context context;
     //private OnMovieItemSelectedListener onMovieItemSelectedListener;
 
@@ -27,18 +27,18 @@ public class GenreListAdapter extends RecyclerView.Adapter<GenreListAdapter.Genr
         tvGenreTypes = new ArrayList<>();
     }
 
-    private void add(TvGenreTypes item) {
+    private void add(TvShow.TvGenreTypes item) {
         tvGenreTypes.add(item);
         notifyItemInserted(tvGenreTypes.size() - 1);
     }
 
-    public void addAll(List<TvGenreTypes> tvGenreTypes) {
-        for (TvGenreTypes movieDatas : tvGenreTypes) {
+    public void addAll(List<TvShow.TvGenreTypes> tvGenreTypes) {
+        for (TvShow.TvGenreTypes movieDatas : tvGenreTypes) {
             add(movieDatas);
         }
     }
 
-    public void remove(TvGenreTypes item) {
+    public void remove(TvShow.TvGenreTypes item) {
         int position = tvGenreTypes.indexOf(item);
         if (position > -1) {
             tvGenreTypes.remove(position);
@@ -52,7 +52,7 @@ public class GenreListAdapter extends RecyclerView.Adapter<GenreListAdapter.Genr
         }
     }
 
-    public TvGenreTypes getItem(int position) {
+    public TvShow.TvGenreTypes getItem(int position) {
         return tvGenreTypes.get(position);
     }
 
@@ -79,7 +79,7 @@ public class GenreListAdapter extends RecyclerView.Adapter<GenreListAdapter.Genr
 
     @Override
     public void onBindViewHolder(GenreListViewHolder holder, int position) {
-        final TvGenreTypes tvGenreTypes1 = tvGenreTypes.get(position);
+        final TvShow.TvGenreTypes tvGenreTypes1 = tvGenreTypes.get(position);
         holder.bind(tvGenreTypes1);
     }
 
@@ -105,7 +105,7 @@ public class GenreListAdapter extends RecyclerView.Adapter<GenreListAdapter.Genr
 
         }
 
-        public void bind(TvGenreTypes tvGenreTypes) {
+        public void bind(TvShow.TvGenreTypes tvGenreTypes) {
 
 
             text_genre_name.setText(tvGenreTypes.getGenreType());

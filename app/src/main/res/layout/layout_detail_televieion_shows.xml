@@ -159,7 +159,7 @@
                         android:fontFamily="@font/lato_italic" />
                 </LinearLayout>
 
-                <include layout="@layout/seperator_layout"></include>
+                <include layout="@layout/separator_layout"></include>
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -182,7 +182,7 @@
                     android:focusable="true"
                     android:fontFamily="@font/lato_italic" />
 
-                <include layout="@layout/seperator_layout"></include>
+                <include layout="@layout/separator_layout"></include>
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -204,7 +204,7 @@
                     android:orientation="horizontal"
                     android:scrollbars="horizontal" />
 
-                <include layout="@layout/seperator_layout"></include>
+                <include layout="@layout/separator_layout"></include>
 
                 <TextView
                     android:layout_width="wrap_content"

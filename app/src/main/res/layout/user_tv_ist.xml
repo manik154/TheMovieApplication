@@ -3,12 +3,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:elevation="5dp">
+    android:elevation="5dp"
+    android:padding="1dp">
 
     <ImageView
         android:id="@+id/img_thumb"
         android:layout_width="match_parent"
         android:layout_height="270dp"
+
         android:scaleType="centerCrop"
         tools:ignore="ContentDescription" />
 

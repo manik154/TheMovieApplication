@@ -114,7 +114,7 @@ public class GetTrialersListAdapter extends RecyclerView.Adapter<GetTrialersList
                     .into(img_poster);*/
             text_trialer_name.setText(videoTrailerContent.getName());
             Glide.with(context)
-                    .load(R.drawable.moviedb_about)
+                    .load(R.mipmap.movie_about)
                     .into(img_poster);
         }
     }

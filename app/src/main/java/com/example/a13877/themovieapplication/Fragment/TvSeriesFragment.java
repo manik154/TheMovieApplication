@@ -1,5 +1,7 @@
 package com.example.a13877.themovieapplication.Fragment;
 
+import android.app.SearchManager;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
@@ -11,6 +13,7 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.content.res.AppCompatResources;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -49,7 +52,9 @@ public class TvSeriesFragment extends Fragment implements TvListAdapter.OnTvItem
     private int page = 1;
     private int limit = 20;
     int count = 0;
+    private boolean isSearched = false;
     private ApiService apiService;
+    private SearchView searchView;
 
 
     @Nullable
@@ -114,7 +119,11 @@ public class TvSeriesFragment extends Fragment implements TvListAdapter.OnTvItem
             @Override
             public void onLoadMore(int next) {
                 page = next;
-                loadData();
+                if (isSearched) {
+                    isSearched = false;
+                } else {
+                    loadData();
+                }
             }
         };
 
@@ -326,6 +335,46 @@ public class TvSeriesFragment extends Fragment implements TvListAdapter.OnTvItem
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.menu_overflow, menu);
         super.onCreateOptionsMenu(menu, inflater);
+
+
+        // Associate searchable configuration with the SearchView
+        SearchManager searchManager = (SearchManager) getActivity().getSystemService(Context.SEARCH_SERVICE);
+        searchView = (SearchView) menu.findItem(R.id.search)
+                .getActionView();
+        searchView.setSearchableInfo(searchManager
+                .getSearchableInfo(getActivity().getComponentName()));
+        searchView.setMaxWidth(Integer.MAX_VALUE);
+
+        // listening to search query text change
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                isSearched = true;
+
+                // filter recycler view when query submitted
+                tvListAdapter.getFilter().filter(query);
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String query) {
+                isSearched = true;
+
+
+                // filter recycler view when text is changed
+                tvListAdapter.getFilter().filter(query);
+                return false;
+            }
+        });
+        searchView.setOnCloseListener(new SearchView.OnCloseListener() {
+            @Override
+            public boolean onClose() {
+                isSearched = false;
+                refresh();
+                return false;
+            }
+        });
+
     }
 
     @Override

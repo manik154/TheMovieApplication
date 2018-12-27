@@ -11,9 +11,11 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ShareCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.graphics.Palette;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -70,6 +72,7 @@ public class MovieDetailActivity extends AppCompatActivity implements GetTrialer
     private int id;
     private Bitmap bitmap;
     private MenuItem item;
+    private LinearLayoutManager linearLayoutManager;
     private MovieDetails movieDetail;
     private CollapsingToolbarLayout collapsingToolbarLayout;
 
@@ -101,7 +104,7 @@ public class MovieDetailActivity extends AppCompatActivity implements GetTrialer
         getTrialersListAdapter = new GetTrialersListAdapter(getApplicationContext());
         getTrialersListAdapter.setOnTrailerItemSelectedListener(this);
         floatingActionButton = findViewById(R.id.fab);
-
+linearLayoutManager=new LinearLayoutManager(getApplicationContext());
         recyclerViewReview = findViewById(R.id.recyclerViewReviewList);
         recyclerViewTrailerList = findViewById(R.id.recyclerViewTrailerList);
 
@@ -167,6 +170,10 @@ public class MovieDetailActivity extends AppCompatActivity implements GetTrialer
         onBackPressed();
         return true;
     }
+    @Override
+    public void onBackPressed() {
+        ActivityCompat.finishAfterTransition(this);
+    }
 
     private void loadReviewDetails(final int id) {
 
@@ -181,8 +188,9 @@ public class MovieDetailActivity extends AppCompatActivity implements GetTrialer
                     reviewListAdapter = new ReviewListAdapter(getApplicationContext());
                     reviewListAdapter.addAll(review.getResults());
 
-                    recyclerViewReview.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+                    recyclerViewReview.setLayoutManager(linearLayoutManager);
                     recyclerViewReview.setHasFixedSize(false);
+                    recyclerViewReview.addItemDecoration(new DividerItemDecoration(getApplicationContext(),linearLayoutManager.getOrientation()));
                     recyclerViewReview.setAdapter(reviewListAdapter);
 
                 } else {

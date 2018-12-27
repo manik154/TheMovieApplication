@@ -266,7 +266,7 @@ public class MoviesFragment extends Fragment implements MovieListAdapter.OnMovie
 
         if (addActionItems) {
 
-            Drawable drawable = AppCompatResources.getDrawable(getActivity(), R.drawable.ic_launcher_foreground);
+            Drawable drawable = AppCompatResources.getDrawable(getActivity(), R.drawable.ic_menu_share);
             FabWithLabelView fabWithLabelView = mSpeedDialView.addActionItem(new SpeedDialActionItem.Builder(R.id
                     .fab_top_rated, drawable)
                     .setFabImageTintColor(ResourcesCompat.getColor(getResources(), R.color.colorPrimary, getActivity().getTheme()))
@@ -278,6 +278,7 @@ public class MoviesFragment extends Fragment implements MovieListAdapter.OnMovie
 
 
             if (fabWithLabelView != null) {
+
                 fabWithLabelView.setSpeedDialActionItem(fabWithLabelView.getSpeedDialActionItemBuilder()
                         .setFabBackgroundColor(ResourcesCompat.getColor(getResources(), R.color.colorPrimary,
                                 getActivity().getTheme()))

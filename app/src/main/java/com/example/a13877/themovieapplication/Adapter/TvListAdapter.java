@@ -6,6 +6,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
@@ -18,21 +20,24 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class TvListAdapter extends RecyclerView.Adapter<TvListAdapter.MovieViewHolder> {
+public class TvListAdapter extends RecyclerView.Adapter<TvListAdapter.MovieViewHolder> implements Filterable {
 
     private List<MovieData> tvDatas;
     private Context context;
+    private List<MovieData> movieFilteredDatas;
     private OnTvItemSelectedListener onTvItemSelectedListener;
 
 
     public TvListAdapter(Context context) {
         this.context = context;
         tvDatas = new ArrayList<>();
+        movieFilteredDatas=new ArrayList<>();
     }
 
     private void add(MovieData item) {
         tvDatas.add(item);
-        notifyItemInserted(tvDatas.size() - 1);
+        this.movieFilteredDatas=tvDatas;
+        notifyItemInserted(movieFilteredDatas.size() - 1);
     }
 
     public void addAll(List<MovieData> movieDatas) {
@@ -44,7 +49,7 @@ public class TvListAdapter extends RecyclerView.Adapter<TvListAdapter.MovieViewH
     public void remove(MovieData item) {
         int position = tvDatas.indexOf(item);
         if (position > -1) {
-            tvDatas.remove(position);
+            movieFilteredDatas.remove(position);
             notifyItemRemoved(position);
         }
     }
@@ -56,7 +61,7 @@ public class TvListAdapter extends RecyclerView.Adapter<TvListAdapter.MovieViewH
     }
 
     public MovieData getItem(int position) {
-        return tvDatas.get(position);
+        return movieFilteredDatas.get(position);
     }
 
     @Override
@@ -80,18 +85,34 @@ public class TvListAdapter extends RecyclerView.Adapter<TvListAdapter.MovieViewH
 
     @Override
     public void onBindViewHolder(MovieViewHolder holder, int position) {
-        final MovieData movieData = tvDatas.get(position);
+        final MovieData movieData = movieFilteredDatas.get(position);
         holder.bind(movieData);
     }
 
     @Override
     public int getItemCount() {
-        Log.v("result", "" + tvDatas.size());
-        return tvDatas.size();
+        Log.v("result", "" + movieFilteredDatas.size());
+        return movieFilteredDatas.size();
     }
 
     public void setOnTvItemSelectedListener(OnTvItemSelectedListener onTvItemSelectedListener) {
         this.onTvItemSelectedListener = onTvItemSelectedListener;
+    }
+
+    @Override
+    public Filter getFilter()
+    {
+        return new Filter() {
+            @Override
+            protected FilterResults performFiltering(CharSequence charSequence) {
+                return null;
+            }
+
+            @Override
+            protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
+
+            }
+        };
     }
 
     public class MovieViewHolder extends RecyclerView.ViewHolder {

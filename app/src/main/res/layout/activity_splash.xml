@@ -9,7 +9,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:src="@drawable/moviedb_about" />
+        android:src="@mipmap/movie_about" />
 
     <TextView
         android:layout_width="wrap_content"
