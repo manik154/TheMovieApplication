@@ -96,11 +96,8 @@ public class NewsFragment extends Fragment implements NewsAdapter.OnMovieItemSel
                         recyclerViewNews.setHasFixedSize(true);
                         recyclerViewNews.setAdapter(newsAdapter);
                         newsAdapter.addAll(news.getArticles());
-                        Toast.makeText(getContext(), "Loaded", Toast.LENGTH_SHORT).show();
                         progressDialog.dismiss();
                     }
-                } else {
-                    Toast.makeText(getActivity(), "No Data!", Toast.LENGTH_LONG).show();
                 }
             }
 

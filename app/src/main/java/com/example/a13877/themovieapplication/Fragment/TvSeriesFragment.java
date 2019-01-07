@@ -155,10 +155,7 @@ public class TvSeriesFragment extends Fragment implements TvListAdapter.OnTvItem
                     if (movie != null) {
                         if (tvListAdapter != null) {
                             tvListAdapter.addAll(movie.getResults());
-                            Toast.makeText(getContext(), "Loaded", Toast.LENGTH_SHORT).show();
                         }
-                    } else {
-                        Toast.makeText(getContext(), "No Data!", Toast.LENGTH_LONG).show();
                     }
 
                     if (swipeRefreshLayout != null)
@@ -187,12 +184,8 @@ public class TvSeriesFragment extends Fragment implements TvListAdapter.OnTvItem
                     if (movie != null) {
                         if (tvListAdapter != null) {
                             tvListAdapter.addAll(movie.getResults());
-                            Toast.makeText(getContext(), "Loaded", Toast.LENGTH_SHORT).show();
                         }
-                    } else {
-                        Toast.makeText(getContext(), "No Data!", Toast.LENGTH_LONG).show();
                     }
-
                     if (swipeRefreshLayout != null)
                         swipeRefreshLayout.setRefreshing(false);
                 }
@@ -219,10 +212,7 @@ public class TvSeriesFragment extends Fragment implements TvListAdapter.OnTvItem
                     if (movie != null) {
                         if (tvListAdapter != null) {
                             tvListAdapter.addAll(movie.getResults());
-                            Toast.makeText(getContext(), "Loaded", Toast.LENGTH_SHORT).show();
                         }
-                    } else {
-                        Toast.makeText(getContext(), "No Data!", Toast.LENGTH_LONG).show();
                     }
 
                     if (swipeRefreshLayout != null)
@@ -306,21 +296,21 @@ public class TvSeriesFragment extends Fragment implements TvListAdapter.OnTvItem
                             count = 1;
                             getActivity().setTitle("TvShows" + " (" + "Most Popular" + ")");
                             refresh();
-                            Toast.makeText(getActivity(), "" + count, Toast.LENGTH_SHORT).show();
+
                             return false; // true to keep the Speed Dial open
 
                         case R.id.fab_on_air_tv_shows:
                             count = 2;
                             getActivity().setTitle("TvShows" + " (" + "OnAir TvShows" + ")");
                             refresh();
-                            Toast.makeText(getActivity(), "2", Toast.LENGTH_SHORT).show();
+
                             return false; // true to keep the Speed Dial open
 
                         case R.id.fab_top_rated:
                             count = 3;
                             getActivity().setTitle("TvShows" + " (" + "Top Rated" + ")");
                             refresh();
-                            Toast.makeText(getActivity(), "3", Toast.LENGTH_SHORT).show();
+
                             return false; // true to keep the Speed Dial open
 
                         default:

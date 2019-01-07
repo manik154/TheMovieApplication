@@ -40,7 +40,7 @@
         android:clipToPadding="false"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+        <android.support.v7.twidget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
             xmlns:card_view="http://schemas.android.com/apk/res-auto"
             android:id="@+id/direction_card_view"
             android:layout_width="match_parent"
@@ -208,7 +208,7 @@
                     android:minHeight="100dp" />
 
             </LinearLayout>
-        </android.support.v7.widget.CardView>
+        </android.support.v7.twidget.CardView>
     </android.support.v4.widget.NestedScrollView>
 
     <android.support.design.widget.FloatingActionButton

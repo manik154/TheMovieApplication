@@ -81,12 +81,9 @@ public class MoviesFragment extends Fragment implements MovieListAdapter.OnMovie
         getActivity().setTitle("Movies" + " (" + "Most Popular" + ")");
         setHasOptionsMenu(true);
         movieListAdapter = new MovieListAdapter(getContext());
-
-
         recyclerViewMovieList.setLayoutManager(gridLayoutManager);
         //  recyclerViewMovieList.addItemDecoration(new GridMarginDecoration(getContext(), 1, 1, 1, 1));
         recyclerViewMovieList.setHasFixedSize(true);
-
         movieListAdapter.setOnMovieItemSelectedListener(this);
 
         recyclerViewMovieList.setAdapter(movieListAdapter);
@@ -172,10 +169,7 @@ public class MoviesFragment extends Fragment implements MovieListAdapter.OnMovie
                             movieListAdapter.addAll(movie.getResults());
 
                         }
-                    } else {
-                        Toast.makeText(getContext(), "No Data!", Toast.LENGTH_LONG).show();
                     }
-
                     if (swipeRefreshLayout != null)
                         swipeRefreshLayout.setRefreshing(false);
                 }
@@ -202,12 +196,9 @@ public class MoviesFragment extends Fragment implements MovieListAdapter.OnMovie
                     if (movie != null) {
                         if (movieListAdapter != null) {
                             movieListAdapter.addAll(movie.getResults());
-                            Toast.makeText(getContext(), "Loaded", Toast.LENGTH_SHORT).show();
-                        }
-                    } else {
-                        Toast.makeText(getContext(), "No Data!", Toast.LENGTH_LONG).show();
-                    }
 
+                        }
+                    }
                     if (swipeRefreshLayout != null)
                         swipeRefreshLayout.setRefreshing(false);
                 }
@@ -234,10 +225,8 @@ public class MoviesFragment extends Fragment implements MovieListAdapter.OnMovie
                     if (movie != null) {
                         if (movieListAdapter != null) {
                             movieListAdapter.addAll(movie.getResults());
-                            Toast.makeText(getContext(), "Loaded", Toast.LENGTH_SHORT).show();
+
                         }
-                    } else {
-                        Toast.makeText(getContext(), "No Data!", Toast.LENGTH_LONG).show();
                     }
 
                     if (swipeRefreshLayout != null)
@@ -322,21 +311,18 @@ public class MoviesFragment extends Fragment implements MovieListAdapter.OnMovie
                             count = 1;
                             getActivity().setTitle("Movies" + " (" + "Most Popular" + ")");
                             refresh();
-                            Toast.makeText(getActivity(), "" + count, Toast.LENGTH_SHORT).show();
                             return false; // true to keep the Speed Dial open
 
                         case R.id.fab_upcoming_movie:
                             count = 2;
                             getActivity().setTitle("Movies" + " (" + "Upcoming" + ")");
                             refresh();
-                            Toast.makeText(getActivity(), "2", Toast.LENGTH_SHORT).show();
                             return false; // true to keep the Speed Dial open
 
                         case R.id.fab_top_rated:
                             count = 3;
                             getActivity().setTitle("Movies" + " (" + "Top Rated" + ")");
                             refresh();
-                            Toast.makeText(getActivity(), "3", Toast.LENGTH_SHORT).show();
                             return false; // true to keep the Speed Dial open
 
                         default:

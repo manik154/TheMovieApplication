@@ -276,8 +276,6 @@ linearLayoutManager=new LinearLayoutManager(getApplicationContext());
                     } else {
                         homepage.setText(tvShow.getHomepage());
                     }
-                } else {
-                    Toast.makeText(TvDetailActivity.this, "No Data!", Toast.LENGTH_LONG).show();
                 }
             }
 
@@ -311,8 +309,6 @@ linearLayoutManager=new LinearLayoutManager(getApplicationContext());
                     progressDialog.dismiss();
                     recyclerView.setAdapter(reviewListAdapter);
 
-                } else {
-                    Toast.makeText(TvDetailActivity.this, "No Data!", Toast.LENGTH_LONG).show();
                 }
             }
 
@@ -342,8 +338,9 @@ linearLayoutManager=new LinearLayoutManager(getApplicationContext());
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == R.id.share) {
-            Toast.makeText(this, "You Clicked Share Option", Toast.LENGTH_SHORT).show();
+        if (item.getItemId() == R.id.share)
+        {
+
         }
 
         if (item.getItemId() == R.id.similar) {

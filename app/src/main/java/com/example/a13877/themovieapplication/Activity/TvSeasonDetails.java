@@ -109,8 +109,6 @@ public class TvSeasonDetails extends AppCompatActivity {
                             .load(ApiService.IMG_URL + season.getPoster_path())
                             .into(imageView);
 
-                } else {
-                    Toast.makeText(getApplicationContext(), "No Data!", Toast.LENGTH_LONG).show();
                 }
             }
 

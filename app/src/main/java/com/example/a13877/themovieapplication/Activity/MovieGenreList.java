@@ -7,6 +7,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.View;
 import android.widget.Toast;
 
 
@@ -23,7 +24,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class MovieGenreList extends AppCompatActivity {
+public class MovieGenreList extends AppCompatActivity implements GenreListAdapter.OnMovieItemSelectedListener {
     private ApiService apiService;
     private Toolbar toolbar;
     private RecyclerView recyclerView;
@@ -41,6 +42,7 @@ public class MovieGenreList extends AppCompatActivity {
         Boolean value = getIntent().getBooleanExtra("isMovie", false);
         recyclerView = findViewById(R.id.recyclerViewGenreList);
         genreListAdapter = new GenreListAdapter(getApplicationContext());
+        genreListAdapter.setOnMovieItemSelectedListener(this);
         if (value) {
             getSupportActionBar().setTitle("Movie Genres");
             loadMovieGenre();
@@ -65,7 +67,6 @@ public class MovieGenreList extends AppCompatActivity {
                         recyclerView.setHasFixedSize(true);
                         recyclerView.setAdapter(genreListAdapter);
 
-                        Toast.makeText(getApplicationContext(), "Loaded", Toast.LENGTH_SHORT).show();
                     }
                 } else {
                     Toast.makeText(getApplicationContext(), "No Data!", Toast.LENGTH_LONG).show();
@@ -99,14 +100,13 @@ public class MovieGenreList extends AppCompatActivity {
                 Log.v("result", "" + response.body());
                 if (tvShowGenre != null) {
 
-                    Toast.makeText(MovieGenreList.this, "1", Toast.LENGTH_SHORT).show();
+
                     if (genreListAdapter != null) {
                         genreListAdapter.addAll(tvShowGenre.getGenres());
                         recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
                         recyclerView.setHasFixedSize(true);
                         recyclerView.setAdapter(genreListAdapter);
 
-                        Toast.makeText(getApplicationContext(), "Loaded", Toast.LENGTH_SHORT).show();
                     }
                 } else {
                     Toast.makeText(getApplicationContext(), "No Data!", Toast.LENGTH_LONG).show();
@@ -125,4 +125,8 @@ public class MovieGenreList extends AppCompatActivity {
     }
 
 
+    @Override
+    public void onItemClick(View v, int position) {
+        Toast.makeText(this, "Coming soon", Toast.LENGTH_SHORT).show();
+    }
 }

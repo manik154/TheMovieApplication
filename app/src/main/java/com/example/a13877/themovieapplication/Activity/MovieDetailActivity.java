@@ -111,14 +111,14 @@ linearLayoutManager=new LinearLayoutManager(getApplicationContext());
         apiService = new ApiService();
         id = getIntent().getExtras().getInt("key");
 
-        floatingActionButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(MovieDetailActivity.this, SimilarMovieslist.class);
-                intent.putExtra("IdSimilar", id);
-                startActivity(intent);
-            }
-        });
+            floatingActionButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(MovieDetailActivity.this, SimilarMovieslist.class);
+                    intent.putExtra("IdSimilar", id);
+                    startActivity(intent);
+                }
+            });
 
         appBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
             boolean isShow = true;
@@ -276,13 +276,10 @@ linearLayoutManager=new LinearLayoutManager(getApplicationContext());
                                             Palette.Swatch textSwatch = palette.getDominantSwatch();
 
                                             if (textSwatch == null) {
-                                                Toast.makeText(MovieDetailActivity.this, "Null swatch :(", Toast.LENGTH_SHORT).show();
                                                 return;
                                             }
                                             appBarLayout.setBackgroundColor(textSwatch.getRgb());
-/*
-                                            titleColorText.setTextColor(textSwatch.getTitleTextColor());
-                                            bodyColorText.setTextColor(textSwatch.getBodyTextColor());*/
+
                                         }
                                     });
                         }

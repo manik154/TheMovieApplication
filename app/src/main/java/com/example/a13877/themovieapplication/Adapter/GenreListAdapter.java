@@ -19,7 +19,7 @@ public class GenreListAdapter extends RecyclerView.Adapter<GenreListAdapter.Genr
 
     private List<TvShow.TvGenreTypes> tvGenreTypes;
     private Context context;
-    //private OnMovieItemSelectedListener onMovieItemSelectedListener;
+    private OnMovieItemSelectedListener onMovieItemSelectedListener;
 
 
     public GenreListAdapter(Context context) {
@@ -60,19 +60,19 @@ public class GenreListAdapter extends RecyclerView.Adapter<GenreListAdapter.Genr
     public GenreListViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.user_genre_movie_list, parent, false);
         final GenreListViewHolder genreListViewHolder = new GenreListViewHolder(view);
-        /*movieViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+        genreListViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                int adapterPos = movieViewHolder.getAdapterPosition();
+                int adapterPos = genreListViewHolder.getAdapterPosition();
                 if (adapterPos != RecyclerView.NO_POSITION) {
                     if (onMovieItemSelectedListener != null) {
                         Log.v("gir","1");
-                        onMovieItemSelectedListener.onItemClick(movieViewHolder.itemView, adapterPos);
+                        onMovieItemSelectedListener.onItemClick(genreListViewHolder.itemView, adapterPos);
                     }
                 }
             }
-        });*/
+        });
 
         return genreListViewHolder;
     }
@@ -89,10 +89,10 @@ public class GenreListAdapter extends RecyclerView.Adapter<GenreListAdapter.Genr
         return tvGenreTypes.size();
     }
 
-    /* public void setOnMovieItemSelectedListener(OnMovieItemSelectedListener onMovieItemSelectedListener) {
+     public void setOnMovieItemSelectedListener(OnMovieItemSelectedListener onMovieItemSelectedListener) {
          this.onMovieItemSelectedListener = onMovieItemSelectedListener;
      }
- */
+
     public class GenreListViewHolder extends RecyclerView.ViewHolder {
 
 
@@ -113,9 +113,9 @@ public class GenreListAdapter extends RecyclerView.Adapter<GenreListAdapter.Genr
         }
     }
 
-    /*public interface OnMovieItemSelectedListener {
+    public interface OnMovieItemSelectedListener {
         void onItemClick(View v, int position);
     }
-*/
+
 
 }

@@ -130,8 +130,6 @@ public class SimilarTvShow extends AppCompatActivity implements GetSimilarMovies
                     recyclerViewSimilar.setHasFixedSize(false);
                     recyclerViewSimilar.setAdapter(similarListAdapter);
 
-                } else {
-                    Toast.makeText(SimilarTvShow.this, "No Data!", Toast.LENGTH_LONG).show();
                 }
 
                 if (swipeRefreshLayout != null)
