@@ -40,7 +40,7 @@
         android:clipToPadding="false"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        <android.support.v7.twidget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+        <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
             xmlns:card_view="http://schemas.android.com/apk/res-auto"
             android:id="@+id/direction_card_view"
             android:layout_width="match_parent"
@@ -121,7 +121,7 @@
 
                 </LinearLayout>
 
-                <include layout="@layout/new_separator"></include>
+                <include layout="@layout/new_separator"> </include>
 
 
                 <TextView
@@ -169,7 +169,7 @@
                     android:focusable="true"
                     android:fontFamily="@font/lato_italic" />
 
-                <include layout="@layout/separator_layout"></include>
+                <include layout="@layout/separator_layout"> </include>
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -188,7 +188,7 @@
                     android:fontFamily="@font/lato_italic"
                     android:minHeight="100dp" />
 
-                <include layout="@layout/separator_layout"></include>
+                <include layout="@layout/separator_layout"> </include>
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -208,7 +208,7 @@
                     android:minHeight="100dp" />
 
             </LinearLayout>
-        </android.support.v7.twidget.CardView>
+        </android.support.v7.widget.CardView>
     </android.support.v4.widget.NestedScrollView>
 
     <android.support.design.widget.FloatingActionButton

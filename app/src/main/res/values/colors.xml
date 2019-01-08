@@ -7,5 +7,7 @@
     <color name="darkGray">#aaaaaa</color>
     <color name="body_text_white">#FFFFFFFF</color>
     <color name="colorBlue">#2c84cc</color>
+    <color name="book_content_color">#E6000000</color>
+    <color name="black_opacity_color">#B3000000</color>
     <color name="color_red">#800000</color>
 </resources>
