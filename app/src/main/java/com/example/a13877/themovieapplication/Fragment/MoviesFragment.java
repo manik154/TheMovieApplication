@@ -66,8 +66,6 @@ public class MoviesFragment extends Fragment implements MovieListAdapter.OnMovie
         //change R.layout.yourlayoutfilename for each of your fragments
         View view = inflater.inflate(R.layout.fragment_menu_1, container, false);
         recyclerViewMovieList = view.findViewById(R.id.recyclerViewMovieList);
-
-
         gridLayoutManager = new GridLayoutManager(getContext(), 2);
         swipeRefreshLayout = view.findViewById(R.id.refresh);
         return view;
@@ -89,13 +87,12 @@ public class MoviesFragment extends Fragment implements MovieListAdapter.OnMovie
         recyclerViewMovieList.setAdapter(movieListAdapter);
         removeScroll();
         addScroll();
-        Log.v("result", "1");
+
         swipeRefreshLayout.setColorSchemeResources(R.color.colorPrimary);
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
                 refresh();
-                Log.v("result", "12");
             }
         });
 
@@ -108,7 +105,7 @@ public class MoviesFragment extends Fragment implements MovieListAdapter.OnMovie
     }
 
     public void refresh() {
-        Log.v("result", "3");
+
 
         if (movieListAdapter != null) {
             movieListAdapter.clear();
@@ -143,7 +140,7 @@ public class MoviesFragment extends Fragment implements MovieListAdapter.OnMovie
     }
 
     private void removeScroll() {
-        Log.v("result", "6");
+
         recyclerViewMovieList.removeOnScrollListener(endlessRecyclerOnScrollListener);
     }
 

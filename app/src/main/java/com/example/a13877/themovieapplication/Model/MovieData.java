@@ -40,7 +40,28 @@ public class MovieData implements Parcelable {
     @SerializedName("vote_average")
     private double voteAverage;
 
+    @SerializedName("original_name")
+    private String originalname;
+    @SerializedName("name")
+    private String name;
+
     public MovieData() {
+    }
+
+    public String getOriginalname() {
+        return originalname;
+    }
+
+    public void setOriginalname(String originalname) {
+        this.originalname = originalname;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public int getId() {

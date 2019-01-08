@@ -157,6 +157,9 @@ public class TvSeriesFragment extends Fragment implements TvListAdapter.OnTvItem
                             tvListAdapter.addAll(movie.getResults());
                         }
                     }
+                    else {
+                        Toast.makeText(getContext(), "No Data!", Toast.LENGTH_LONG).show();
+                    }
 
                     if (swipeRefreshLayout != null)
                         swipeRefreshLayout.setRefreshing(false);

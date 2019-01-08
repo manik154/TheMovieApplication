@@ -14,6 +14,7 @@ import com.bumptech.glide.Glide;
 import com.example.a13877.themovieapplication.Model.MovieData;
 import com.example.a13877.themovieapplication.R;
 import com.example.a13877.themovieapplication.api.ApiService;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,17 +30,18 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.Movi
     public MovieListAdapter(Context context) {
         this.context = context;
         movieDatas = new ArrayList<>();
-        movieFilteredDatas=new ArrayList<>();
+        movieFilteredDatas = new ArrayList<>();
     }
 
     private void add(MovieData item) {
 
         movieDatas.add(item);
-        this.movieFilteredDatas=movieDatas;
+        this.movieFilteredDatas = movieDatas;
         notifyItemInserted(movieFilteredDatas.size() - 1);
     }
 
     public void addAll(List<MovieData> movieDatas) {
+
         for (MovieData movieData : movieDatas) {
             add(movieData);
         }
@@ -80,7 +82,7 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.Movi
 
                     movieFilteredDatas = filteredList;
                 }
-
+                Log.v("hope", "" + movieFilteredDatas.size());
                 FilterResults filterResults = new FilterResults();
                 filterResults.values = movieFilteredDatas;
                 return filterResults;
@@ -109,7 +111,7 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.Movi
                 int adapterPos = movieViewHolder.getAdapterPosition();
                 if (adapterPos != RecyclerView.NO_POSITION) {
                     if (onMovieItemSelectedListener != null) {
-                        Log.v("gir","1");
+                        Log.v("gir", "1");
                         onMovieItemSelectedListener.onItemClick(movieViewHolder.itemView, adapterPos);
                     }
                 }

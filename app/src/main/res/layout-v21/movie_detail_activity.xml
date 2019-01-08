@@ -28,6 +28,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
                 app:layout_collapseMode="pin"
+
                 app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
         </android.support.design.widget.CollapsingToolbarLayout>
     </android.support.design.widget.AppBarLayout>
@@ -121,7 +122,7 @@
 
                 </LinearLayout>
 
-                <include layout="@layout/new_separator"> </include>
+                <include layout="@layout/new_separator"></include>
 
 
                 <TextView
@@ -169,7 +170,7 @@
                     android:focusable="true"
                     android:fontFamily="@font/lato_italic" />
 
-                <include layout="@layout/separator_layout"> </include>
+                <include layout="@layout/separator_layout"></include>
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -188,7 +189,7 @@
                     android:fontFamily="@font/lato_italic"
                     android:minHeight="100dp" />
 
-                <include layout="@layout/separator_layout"> </include>
+                <include layout="@layout/separator_layout"></include>
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -217,9 +218,10 @@
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
         android:clickable="true"
+        android:focusable="true"
         android:src="@drawable/similar_floating_icon"
-        app:elevation="6dp"
 
+        app:elevation="6dp"
         app:layout_anchor="@id/app_bar_layout"
         app:layout_anchorGravity="bottom|right|end"
         app:pressedTranslationZ="12dp" />

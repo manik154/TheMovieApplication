@@ -31,17 +31,19 @@ public class TvListAdapter extends RecyclerView.Adapter<TvListAdapter.MovieViewH
     public TvListAdapter(Context context) {
         this.context = context;
         tvDatas = new ArrayList<>();
-        movieFilteredDatas=new ArrayList<>();
+        movieFilteredDatas = new ArrayList<>();
     }
 
     private void add(MovieData item) {
         tvDatas.add(item);
-        this.movieFilteredDatas=tvDatas;
+        this.movieFilteredDatas = tvDatas;
         notifyItemInserted(movieFilteredDatas.size() - 1);
     }
 
-    public void addAll(List<MovieData> movieDatas) {
-        for (MovieData movieData : movieDatas) {
+    public void addAll(List<MovieData> tvDatas)
+    {
+        for (MovieData movieData : tvDatas)
+        {
             add(movieData);
         }
     }
@@ -59,6 +61,45 @@ public class TvListAdapter extends RecyclerView.Adapter<TvListAdapter.MovieViewH
             remove(getItem(0));
         }
     }
+
+    @Override
+    public Filter getFilter() {
+        return new Filter() {
+            @Override
+            protected FilterResults performFiltering(CharSequence charSequence) {
+                String charString = charSequence.toString();
+                if (charString.isEmpty()) {
+                    movieFilteredDatas = tvDatas;
+                } else {
+
+                    List<MovieData> filteredList = new ArrayList<>();
+
+
+                    for (MovieData row : tvDatas) {
+
+                        // name match condition. this might differ depending on your requirement
+                        // here we are looking for name or phone number match
+                        if (row.getName().toLowerCase().contains(charString.toLowerCase())) {
+                            filteredList.add(row);
+                        }
+                    }
+
+                    movieFilteredDatas = filteredList;
+                }
+
+                FilterResults filterResults = new FilterResults();
+                filterResults.values = movieFilteredDatas;
+                return filterResults;
+            }
+
+            @Override
+            protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
+                movieFilteredDatas = (ArrayList<MovieData>) filterResults.values;
+                notifyDataSetChanged();
+            }
+        };
+    }
+
 
     public MovieData getItem(int position) {
         return movieFilteredDatas.get(position);
@@ -91,28 +132,11 @@ public class TvListAdapter extends RecyclerView.Adapter<TvListAdapter.MovieViewH
 
     @Override
     public int getItemCount() {
-        Log.v("result", "" + movieFilteredDatas.size());
         return movieFilteredDatas.size();
     }
 
     public void setOnTvItemSelectedListener(OnTvItemSelectedListener onTvItemSelectedListener) {
         this.onTvItemSelectedListener = onTvItemSelectedListener;
-    }
-
-    @Override
-    public Filter getFilter()
-    {
-        return new Filter() {
-            @Override
-            protected FilterResults performFiltering(CharSequence charSequence) {
-                return null;
-            }
-
-            @Override
-            protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
-
-            }
-        };
     }
 
     public class MovieViewHolder extends RecyclerView.ViewHolder {
@@ -128,7 +152,8 @@ public class TvListAdapter extends RecyclerView.Adapter<TvListAdapter.MovieViewH
             /*Picasso.with(context)
                     .load(ApiService.IMG_URL + movieData.getPosterPath())
                     .into(img);
-            */Glide.with(context)
+            */
+            Glide.with(context)
                     .load(ApiService.IMG_URL + movieData.getPosterPath())
                     .into(img);
         }
