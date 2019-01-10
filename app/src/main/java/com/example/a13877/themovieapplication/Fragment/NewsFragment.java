@@ -52,7 +52,7 @@ public class NewsFragment extends Fragment implements NewsAdapter.OnMovieItemSel
         newsAdapter.setOnMovieItemSelectedListener(this);
         recyclerViewNews = view.findViewById(R.id.recyclerViewNews);
         apiServiceNews = new ApiServiceNews();
-        getActivity().setTitle("News");
+        getActivity().setTitle("Entertainment news");
 
         setHasOptionsMenu(true);
 
