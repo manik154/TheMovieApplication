@@ -104,21 +104,21 @@ public class MovieDetailActivity extends AppCompatActivity implements GetTrialer
         getTrialersListAdapter = new GetTrialersListAdapter(getApplicationContext());
         getTrialersListAdapter.setOnTrailerItemSelectedListener(this);
         floatingActionButton = findViewById(R.id.fab);
-linearLayoutManager=new LinearLayoutManager(getApplicationContext());
+        linearLayoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerViewReview = findViewById(R.id.recyclerViewReviewList);
         recyclerViewTrailerList = findViewById(R.id.recyclerViewTrailerList);
 
         apiService = new ApiService();
         id = getIntent().getExtras().getInt("key");
 
-            floatingActionButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Intent intent = new Intent(MovieDetailActivity.this, SimilarMovieslist.class);
-                    intent.putExtra("IdSimilar", id);
-                    startActivity(intent);
-                }
-            });
+        floatingActionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MovieDetailActivity.this, SimilarMovieslist.class);
+                intent.putExtra("IdSimilar", id);
+                startActivity(intent);
+            }
+        });
 
         appBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
             boolean isShow = true;
@@ -170,6 +170,7 @@ linearLayoutManager=new LinearLayoutManager(getApplicationContext());
         onBackPressed();
         return true;
     }
+
     @Override
     public void onBackPressed() {
         ActivityCompat.finishAfterTransition(this);
@@ -190,7 +191,7 @@ linearLayoutManager=new LinearLayoutManager(getApplicationContext());
 
                     recyclerViewReview.setLayoutManager(linearLayoutManager);
                     recyclerViewReview.setHasFixedSize(false);
-                    recyclerViewReview.addItemDecoration(new DividerItemDecoration(getApplicationContext(),linearLayoutManager.getOrientation()));
+                    recyclerViewReview.addItemDecoration(new DividerItemDecoration(getApplicationContext(), linearLayoutManager.getOrientation()));
                     recyclerViewReview.setAdapter(reviewListAdapter);
 
                 } else {
@@ -349,8 +350,8 @@ linearLayoutManager=new LinearLayoutManager(getApplicationContext());
         if (item.getItemId() == R.id.share) {
             ShareCompat.IntentBuilder.from(this)
                     .setType("text/plain")
-                    .setChooserTitle("Application Name")
-                    .setText("http://play.google.com/store/apps/details?id=" + this.getPackageName())
+                    .setChooserTitle("Share via")
+                    .setText("http://play.google.com/store/apps/details?id=")
                     .startChooser();
         }
         if (item.getItemId() == R.id.similar) {
